@@ -1,5 +1,7 @@
 package ths;
 
+import java.io.File;
+
 public class Main {
 
 	/**
@@ -9,31 +11,24 @@ public class Main {
 		// TODO Auto-generated method stub
 //		String line = null;
 //		String tag = null;
-		Parser parser = new Parser("0.0.log");
-//		String tags[] = new String[100];
-//		while((line = parser.nextLine()) != null)
-//		{
-			parser.parse();	
-			parser.printIntervalOfPlayerMoveEvents();
-			
-			
-			
-//			tag = parser.getTag(line);
-//			System.out.println(tag);
-//			if(!parser.containsTag(tag))
-//			{
-//				parser.addTag(tag);
-//				System.out.println(line);
-//				if(tag.equals("PLAYER_MOVE"))
-//				{
-//					try {
-//						parser.getPlayerMove(line);
-//					} catch (Exception e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		}
+		String logRoot = "logs/phase2/";
+		File[] files = new File(logRoot).listFiles();
+		Parser parser;
+		
+		for (File subjectDir : files) 
+		{
+			if(subjectDir.isDirectory())
+			{
+				parser = new Parser(logRoot + subjectDir.getName() + "/self/0.0.log");
+				parser.parse();	
+				parser.printIntervalOfPlayerMoveEvents();
+				
+				parser = new Parser(logRoot + subjectDir.getName() + "/role/0.0.log");
+				parser.parse();	
+				parser.printIntervalOfPlayerMoveEvents();
+			}
+		}
+		
+							
 	}
 }
