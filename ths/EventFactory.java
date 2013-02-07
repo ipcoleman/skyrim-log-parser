@@ -8,7 +8,7 @@ public class EventFactory {
 		PLAYER_WEAPON_RIGHT, PLAYER_WEAPON_LEFT, PLAYER_WEAPON_WITHDRAWN, PLAYER_ITEM_REMOVED, PLAYER_CELL_CHANGE,
 		PLAYER_WORLDSPACE_CHANGE, PLAYER_FIGHT, PLAYER_DIALOGUE, QUEST_STAGE_CHANGE, PLAYER_DISPLAY_CASE_OPEN,
 		PLAYER_ACTOR_VIEW_GAIN, PLAYER_ACTOR_VIEW_LOSS, PLAYER_DISTANCE_ACTOR, PLAYER_BOOK_READ, QUEST_COMPLETED,
-		LOG_CLOSE
+		LOG_CLOSE, QUEST_INIT
 	}
 	
 	public EventFactory() {
@@ -46,6 +46,9 @@ public class EventFactory {
 			case PLAYER_WEAPON_RIGHT:
 			case PLAYER_WEAPON_LEFT:
 				e = new PlayerWeaponEvent(line);
+				break;
+			case QUEST_INIT:
+				e = new QuestInitEvent(line);
 				break;
 			default:
 				e = null;
