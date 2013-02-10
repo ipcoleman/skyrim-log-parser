@@ -15,17 +15,45 @@ public class Main {
 		File[] files = new File(logRoot).listFiles();
 		Parser parser;
 		
+		/* iterate over all log files */
 		for (File subjectDir : files) 
 		{
 			if(subjectDir.isDirectory())
 			{
-				parser = new Parser(logRoot + subjectDir.getName() + "/self/0.0.log");
-				parser.parse();	
-				parser.printIntervalOfPlayerMoveEvents();
-				
-				parser = new Parser(logRoot + subjectDir.getName() + "/role/0.0.log");
-				parser.parse();	
-				parser.printIntervalOfPlayerMoveEvents();
+				/* iterate over role & self directories for subject id */
+				for (File playTypeDir : subjectDir.listFiles()) 
+				{					
+					if(playTypeDir.isDirectory())
+					{
+						/* enter 'self' dir */
+						if(playTypeDir.getName().equals("self"))
+						{
+							/* parse self files */
+							for(File roleFile : playTypeDir.listFiles())
+							{
+								parser = new Parser(logRoot + subjectDir.getName() + "/self/" + roleFile.getName());
+								System.out.println("FILE NAME: " + roleFile.getName());
+								parser.parse();	
+								parser.printIntervalOfPlayerMoveEvents();
+							}
+						}
+												
+						/* enter 'role' dir */
+						if(playTypeDir.getName().equals("role"))
+						{
+							/* parse role files */
+							for(File roleFile : playTypeDir.listFiles())
+							{
+								parser = new Parser(logRoot + subjectDir.getName() + "/role/" + roleFile.getName());
+								System.out.println("FILE NAME: " + roleFile.getName());
+								parser.parse();	
+								parser.printIntervalOfPlayerMoveEvents();
+							}
+						}
+					}
+				}
+					
+					
 			}
 		}
 		
