@@ -37,7 +37,7 @@ public class QuestStageChangeEvent extends Event {
 
 	@Override
 	protected void parse() {
-//		super.parse();
+		super.parse();
 		try {
 			parseQuestStageChange();
 		} catch (IncorrectTagException e) {

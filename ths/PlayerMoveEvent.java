@@ -49,7 +49,7 @@ public class PlayerMoveEvent extends Event {
 	protected void parse() {
 		// TODO Auto-generated method stub
 		try {
-//			super.parse();
+			super.parse();
 			parsePlayerMove();
 		} catch (IncorrectTagException e) {
 			// TODO Auto-generated catch block

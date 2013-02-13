@@ -68,7 +68,7 @@ public class PlayerItemObtainEvent extends Event {
 	@Override
 	protected void parse() {
 		// TODO Auto-generated method stub
-//		super.parse();
+		super.parse();
 		try {
 			parsePlayerItemObtain();
 		} catch (IncorrectTagException e) {
@@ -82,9 +82,9 @@ public class PlayerItemObtainEvent extends Event {
 		if(this.tag.equals("PLAYER_ITEM_OBTAIN"))
 		{
 			setFormID(parseFormID());
-//			System.out.println(formID);
+			System.out.println(formID);
 			setObjRef(parseObjRef());
-//			System.out.println(objRef);
+			System.out.println(objRef);
 			setFormName(parseFormName());
 			setCount(parseCount());
 			setPrevContainer(parsePrevContainer());

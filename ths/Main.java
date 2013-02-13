@@ -29,10 +29,10 @@ public class Main {
 						if(playTypeDir.getName().equals("self"))
 						{
 							/* parse self files */
-							for(File selfFile : playTypeDir.listFiles())
+							for(File roleFile : playTypeDir.listFiles())
 							{
-								parser = new Parser(logRoot + subjectDir.getName() + "/self/" + selfFile.getName());
-								System.out.println("FILE NAME: " + selfFile.getAbsolutePath());
+								parser = new Parser(logRoot + subjectDir.getName() + "/self/" + roleFile.getName());
+								System.out.println("FILE NAME: " + roleFile.getName());
 								parser.parse();	
 								parser.printIntervalOfPlayerMoveEvents();
 							}
@@ -45,7 +45,7 @@ public class Main {
 							for(File roleFile : playTypeDir.listFiles())
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/role/" + roleFile.getName());
-								System.out.println("FILE NAME: " + roleFile.getAbsolutePath());
+								System.out.println("FILE NAME: " + roleFile.getName());
 								parser.parse();	
 								parser.printIntervalOfPlayerMoveEvents();
 							}
