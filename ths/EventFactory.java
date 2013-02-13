@@ -18,17 +18,17 @@ public class EventFactory {
 	
 	public Event makeEvent(String line)
 	{
-		Event e = new Event(line);
+		Event e = null;
 		EventType eType = EventType.valueOf(e.getTag().toUpperCase());
 		
 		switch(eType)
 		{
 			case LOG_OPEN:
-				e = new Event(line);
+				e = null;
 				e.setTag("LOG_OPEN");
 				break;
 			case LOG_CLOSE:
-				e = new Event(line);
+				e = null;
 				e.setTag("LOG_CLOSE");
 				break;
 			case PLAYER_MOVE:
