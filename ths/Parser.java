@@ -52,6 +52,7 @@ public class Parser {
 		{
 			System.out.println("Line " + currentLine + "\n");
 			e = factory.makeEvent(line);
+			System.out.println("Tag: " + e.getTag());
 			System.out.println(e);
 			events.add(e);
 			currentLine++;

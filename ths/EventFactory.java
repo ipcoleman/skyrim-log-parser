@@ -8,7 +8,8 @@ public class EventFactory {
 		PLAYER_WEAPON_RIGHT, PLAYER_WEAPON_LEFT, PLAYER_WEAPON_WITHDRAWN, PLAYER_ITEM_REMOVED, PLAYER_CELL_CHANGE,
 		PLAYER_WORLDSPACE_CHANGE, PLAYER_FIGHT, PLAYER_DIALOGUE, QUEST_STAGE_CHANGE, PLAYER_DISPLAY_CASE_OPEN,
 		PLAYER_ACTOR_VIEW_GAIN, PLAYER_ACTOR_VIEW_LOSS, PLAYER_DISTANCE_ACTOR, PLAYER_BOOK_READ, QUEST_COMPLETED,
-		LOG_CLOSE, QUEST_INIT
+		LOG_CLOSE, QUEST_INIT, AI_PACKAGE_START, PLAYER_READ_BOOK, ACTOR_PACKAGE_START, ACTOR_MOVE_TO_PLAYER, PLAYER_DOOR_OPEN,
+		PLAYER_ENTER_TRIGGER
 	}
 	
 	public EventFactory() {
@@ -40,7 +41,8 @@ public class EventFactory {
 				e = new PlayerPOVChangeEvent(line);
 				break;
 			case PLAYER_TRIGGER_ENTER:
-			case PLAYER_TRIGGER_LEAVE:
+			case PLAYER_ENTER_TRIGGER:
+			case PLAYER_TRIGGER_LEAVE:			
 				e = new PlayerTriggerEvent(line);
 				break;
 			case PLAYER_WEAPON_RIGHT:
@@ -49,6 +51,9 @@ public class EventFactory {
 				break;
 			case QUEST_INIT:
 				e = new QuestInitEvent(line);
+				break;
+			case QUEST_STAGE_CHANGE:
+				
 				break;
 			default:
 				e = null;

@@ -40,7 +40,7 @@ public class PlayerTriggerEvent extends Event {
 	@Override
 	protected void parse() {
 		// TODO Auto-generated method stub
-		super.parse();
+//		super.parse();
 		try {
 			parseTrigger();
 		} catch (IncorrectTagException e) {
@@ -54,7 +54,7 @@ public class PlayerTriggerEvent extends Event {
 		if(this.tag.contains("PLAYER_TRIGGER"))
 		{
 			// set trigger event type
-			if(this.tag.equals("PLAYER_TRIGGER_ENTER"))
+			if(this.tag.equals("PLAYER_TRIGGER_ENTER") || this.tag.equals("PLAYER_ENTER_TRIGGER"))
 				setType(PlayerTriggerType.ENTER);
 			else if(this.tag.equals("PLAYER_TRIGGER_LEAVE"))
 				setType(PlayerTriggerType.LEAVE);

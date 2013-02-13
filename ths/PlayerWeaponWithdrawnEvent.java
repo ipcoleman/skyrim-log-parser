@@ -29,7 +29,7 @@ public class PlayerWeaponWithdrawnEvent extends Event {
 	@Override
 	protected void parse() {
 		// TODO Auto-generated method stub
-		super.parse();
+//		super.parse();
 		try {
 			parseWeaponWithdrawn();
 		} catch (IncorrectTagException e) {

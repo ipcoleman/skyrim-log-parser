@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Event {
+public abstract class Event {
 	
 	protected String line;
 	protected String tag;
@@ -13,7 +13,6 @@ public class Event {
 	
 	public Event(String line)
 	{
-//		this.setTokens(line.split(" "));
 		this.setLine(line);
 		this.setTimestamp(parseDateTimeAsDate());
 		this.setTag(parseTag());
@@ -29,9 +28,7 @@ public class Event {
 
 	// Intended to parse and set applicable
 	// attributes for respective Event obj
-	protected void parse() {
-		// will likely always be overridden
-	}
+	abstract void parse();
 	
 	public String getTag() {
 		return tag;
@@ -105,8 +102,8 @@ public class Event {
 	@Override
 	public String toString() {
 		String str = "";
-		str.concat("Tag: " + tag + "\n");
-		str.concat("Timestamp: " + timestamp + "\n");
+		str.concat("Tag: " + this.tag + "\n");
+		str.concat("Timestamp: " + this.timestamp + "\n");
 		str.concat("------------------");
 				
 		return str;
