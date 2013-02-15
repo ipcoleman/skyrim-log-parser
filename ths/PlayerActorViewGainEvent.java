@@ -1,11 +1,11 @@
 package ths;
 
-public class PlayerActorViewGain extends Event {
+public class PlayerActorViewGainEvent extends Event {
 
 	private String actorID;
 	private String actorName;
 	
-	public PlayerActorViewGain(String line) {
+	public PlayerActorViewGainEvent(String line) {
 		super(line);
 		// TODO Auto-generated constructor stub
 	}
