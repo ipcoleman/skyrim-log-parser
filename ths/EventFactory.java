@@ -4,11 +4,12 @@ public class EventFactory {
 
 	private enum EventType
 	{
-		LOG_OPEN, PLAYER_MOVE, PLAYER_ITEM_OBTAIN, PLAYER_POV_CHANGE, PLAYER_TRIGGER_ENTER, PLAYER_TRIGGER_LEAVE,
+		LOG_OPEN, PLAYER_MOVE, PLAYER_ITEM_OBTAIN, PLAYER_POV_CHANGE, PLAYER_TRIGGER_ENTER, PLAYER_ENTER_TRIGGER, PLAYER_TRIGGER_LEAVE,
 		PLAYER_WEAPON_RIGHT, PLAYER_WEAPON_LEFT, PLAYER_WEAPON_WITHDRAWN, PLAYER_ITEM_REMOVED, PLAYER_CELL_CHANGE,
 		PLAYER_WORLDSPACE_CHANGE, PLAYER_FIGHT, PLAYER_DIALOGUE, QUEST_STAGE_CHANGE, PLAYER_DISPLAY_CASE_OPEN,
-		PLAYER_ACTOR_VIEW_GAIN, PLAYER_ACTOR_VIEW_LOSS, PLAYER_DISTANCE_ACTOR, PLAYER_BOOK_READ, QUEST_COMPLETED,
-		LOG_CLOSE, QUEST_INIT
+		PLAYER_ACTOR_VIEW_GAIN, PLAYER_ACTOR_VIEW_LOSS, PLAYER_DISTANCE_ACTOR, PLAYER_BOOK_READ, PLAYER_READ_BOOK, QUEST_COMPLETED,
+		LOG_CLOSE, QUEST_INIT, AI_PACKAGE_START, ACTOR_PACKAGE_START, ACTOR_MOVE_TO_PLAYER,
+		PLAYER_DOOR_OPEN, DOOR_OPEN, ACTOR_DOOR_OPEN
 	}
 	
 	public EventFactory() {
@@ -36,10 +37,14 @@ public class EventFactory {
 			case PLAYER_ITEM_OBTAIN:
 				e = new PlayerItemObtainEvent(line);
 				break;
+			case PLAYER_ITEM_REMOVED:
+				e = new PlayerItemRemovedEvent(line);
+				break;
 			case PLAYER_POV_CHANGE:
 				e = new PlayerPOVChangeEvent(line);
 				break;
 			case PLAYER_TRIGGER_ENTER:
+			case PLAYER_ENTER_TRIGGER:
 			case PLAYER_TRIGGER_LEAVE:
 				e = new PlayerTriggerEvent(line);
 				break;
@@ -47,9 +52,58 @@ public class EventFactory {
 			case PLAYER_WEAPON_LEFT:
 				e = new PlayerWeaponEvent(line);
 				break;
+			case PLAYER_WEAPON_WITHDRAWN:
+				e = new PlayerWeaponWithdrawnEvent(line);
+				break;
 			case QUEST_INIT:
 				e = new QuestInitEvent(line);
 				break;
+			case QUEST_STAGE_CHANGE:
+				e = new QuestStageChangeEvent(line);
+				break;
+			case QUEST_COMPLETED:
+				e = new QuestCompletedEvent(line);
+				break;
+			case PLAYER_CELL_CHANGE:
+				e = new PlayerCellChangeEvent(line);
+				break;
+			case PLAYER_WORLDSPACE_CHANGE:
+				e = new PlayerWorldspaceChangeEvent(line);
+				break;
+			case PLAYER_FIGHT:
+				e = new PlayerFightEvent(line);
+				break;
+			case PLAYER_DIALOGUE:
+				e = new PlayerDialogueEvent(line);
+				break;
+			case PLAYER_DISPLAY_CASE_OPEN:
+				e = new PlayerDisplayCaseOpenEvent(line);
+				break;
+			case PLAYER_ACTOR_VIEW_GAIN:
+				e = new PlayerActorViewGainEvent(line);
+				break;
+			case PLAYER_ACTOR_VIEW_LOSS:
+				e = new PlayerActorViewLossEvent(line);
+				break;
+			case PLAYER_DISTANCE_ACTOR:
+				e = new PlayerDistanceActorEvent(line);
+				break;
+			case PLAYER_BOOK_READ:
+			case PLAYER_READ_BOOK:
+				e = new PlayerBookReadEvent(line);
+				break;
+			case AI_PACKAGE_START:
+			case ACTOR_PACKAGE_START:
+				e = new AIPackageStartEvent(line);
+				break;
+			case ACTOR_MOVE_TO_PLAYER:
+				e = new ActorMoveToPlayerEvent(line);
+				break;
+			case PLAYER_DOOR_OPEN:
+			case DOOR_OPEN:
+			case ACTOR_DOOR_OPEN:
+				e = new PlayerDoorOpenEvent(line);
+				break;				
 			default:
 				e = null;
 				break;
