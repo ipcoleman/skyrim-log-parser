@@ -1,8 +1,11 @@
 package ths;
 
 import java.io.File;
+import java.util.Scanner;
 
 public class Main {
+
+	private static Scanner input;
 
 	/**
 	 * @param args
@@ -14,6 +17,7 @@ public class Main {
 		String logRoot = "logs/phase2/";
 		File[] files = new File(logRoot).listFiles();
 		Parser parser;
+		input = new Scanner(System.in);
 		
 		/* iterate over all log files */
 		for (File subjectDir : files) 
@@ -32,9 +36,10 @@ public class Main {
 							for(File roleFile : playTypeDir.listFiles())
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/self/" + roleFile.getName());
-								System.out.println("FILE NAME: " + roleFile.getName());
+								System.out.println("FILE NAME: " + roleFile.getPath());
 								parser.parse();	
-								parser.printIntervalOfPlayerMoveEvents();
+//								parser.printIntervalOfPlayerMoveEvents();
+								System.out.println("FINISHED FILE: " + roleFile.getPath());
 							}
 						}
 												
@@ -45,11 +50,21 @@ public class Main {
 							for(File roleFile : playTypeDir.listFiles())
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/role/" + roleFile.getName());
-								System.out.println("FILE NAME: " + roleFile.getName());
+								System.out.println("FILE NAME: " + roleFile.getPath());
 								parser.parse();	
-								parser.printIntervalOfPlayerMoveEvents();
+//								parser.printIntervalOfPlayerMoveEvents();
+								System.out.println("FINISHED FILE: " + roleFile.getPath());
 							}
 						}
+						
+						
+						
+						/* ask if we should continue */
+						System.out.print("Continue (y/n)? > ");
+						String choice = input.nextLine();
+						// exit program
+						if(choice.equals("n"))
+							System.exit(0);
 					}
 				}
 					
