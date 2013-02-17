@@ -38,7 +38,6 @@ public class Parser {
 			factory = new EventFactory();
 			currentLine = 1;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -50,7 +49,7 @@ public class Parser {
 		
 		while((line = nextLine()) != null)
 		{
-			System.out.println("Line " + currentLine + "\n");
+			System.out.println("Line " + currentLine + ": " + line + "\n");
 			e = factory.makeEvent(line);
 			System.out.println(e);
 			events.add(e);
