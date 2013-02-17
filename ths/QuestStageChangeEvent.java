@@ -48,7 +48,7 @@ public class QuestStageChangeEvent extends Event {
 	
 	private void parseQuestStageChange() throws IncorrectTagException
 	{
-		if(this.tag.contains("QUEST_INIT"))
+		if(this.tag.contains("QUEST_STAGE_CHANGE"))
 		{			
 //			System.out.println(parseQuestName());
 			setQuestID(parseQuestID());
