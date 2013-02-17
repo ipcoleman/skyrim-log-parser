@@ -82,12 +82,17 @@ public class PlayerItemObtainEvent extends Event {
 		if(this.tag.equals("PLAYER_ITEM_OBTAIN"))
 		{
 			setFormID(parseFormID());
-			System.out.println(formID);
+//			System.out.println("FormID: " + this.formID);
+//			System.out.println("Line: " + line);
 			setObjRef(parseObjRef());
-			System.out.println(objRef);
+//			System.out.println("ObjRef: " + this.objRef);
+//			System.out.println(objRef);
 			setFormName(parseFormName());
+//			System.out.println("FormName: " + this.formName);
 			setCount(parseCount());
+//			System.out.println("Count: " + this.count);
 			setPrevContainer(parsePrevContainer());
+//			System.out.println("PrevContainer: " + this.prevContainer);
 		}
 		else
 		{
@@ -98,23 +103,28 @@ public class PlayerItemObtainEvent extends Event {
 	private String parseFormID()
 	{
 		String form = "";		
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
+//		int startIndex, endIndex;
+//		startIndex = line.indexOf('[');
+//		endIndex = line.indexOf(']') + 1;
 		
-		if(startIndex >= 0)
-		{
-			String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
+//		if(startIndex >= 0)
+//		{
+			String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [Form < (02050A4C)>]
+			Pattern pattern = Pattern.compile(searchRegex);
+		    Matcher matcher = pattern.matcher(line);
 	//		searchIndex = line.indexOf(searchTerm);
-			if(line.substring(startIndex, endIndex).matches(searchRegex))
+			if(matcher.find())
 			{
-				startIndex = line.indexOf('(') + 1;
-				endIndex = line.indexOf(')', startIndex);
-				form = line.substring(startIndex, endIndex);
+//				startIndex = line.indexOf('(') + 1;
+//				endIndex = line.indexOf(')', startIndex);
+				form = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+				line = line.substring(matcher.end());	
+//				System.out.println(line);
+//				form = line.substring(startIndex, endIndex);
 				// chop off formID from line
-				line = line.substring(endIndex + 4);
+//				line = line.replaceFirst(searchRegex, "");
 			}
-		}
+//		}
 		
 		return form;
 	}
@@ -122,34 +132,47 @@ public class PlayerItemObtainEvent extends Event {
 	private String parseObjRef()
 	{
 		String ref = "";
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
+//		int startIndex, endIndex;
+//		startIndex = line.indexOf('[');
+//		endIndex = line.indexOf(']') + 1;
 		
 		
 //		if(startIndex >= 0)
 //		{
-			String searchRegex = "^(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
+			String nullStr = "None";
+			String searchRegex = nullStr + "|(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [ObjectReference < (02039836)>]
 			Pattern pattern = Pattern.compile(searchRegex);
 		    Matcher matcher = pattern.matcher(line);
 	//		searchIndex = line.indexOf(searchRegex);
 //			if(line.substring(startIndex, endIndex).matches(searchRegex))
-		    if(matcher.find()){
-			    if(matcher.start() == 0)
-				{
-					startIndex = line.indexOf('(') + 1;
-					endIndex = line.indexOf(')', startIndex);
-					ref = line.substring(startIndex, endIndex);
+		    if(matcher.find())
+		    {
+//			    if(matcher.start() == 0)
+//				{
+////					startIndex = line.indexOf('(') + 1;
+//					endIndex = line.indexOf(')', startIndex);
+
+	    		/* check if matched string is length of nullStr */
+		    	if((matcher.end() - matcher.start()) == nullStr.length())
+		    	{
+		    		ref = "None";
+		    		line = line.substring(ref.length()); // start line at end of 'None'	
+		    	}
+		    	else 
+		    	{
+		    		ref = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+					line = line.substring(matcher.end());	
 //					System.out.println("End index: " + endIndex);
-					line = line.substring(endIndex + 4); // ignore ">] " string after objRef
-				}
+//					line = line.substring(endIndex + 4); // ignore ">] " string after objRef
+		    	}
+//				}
 		    }
-			else // no object reference ("None")
-			{
-				ref = line.split(" ")[0];
-				line = line.substring(ref.length() + 1);
-			}
-//		}
+//			else // no object reference ("None")
+//			{
+//				ref = line.split(" ")[0];
+//				line = line.substring(ref.length() + 1);
+//			}
+////		}
 		
 		return ref;
 	}
@@ -157,15 +180,15 @@ public class PlayerItemObtainEvent extends Event {
 	private String parseFormName()
 	{
 		String fName = "";
-		int startIndex, endIndex, searchIndex;
-		String searchTerm = "\"";
-		searchIndex = line.indexOf(searchTerm);
-		if(searchIndex >= 0)
+		String searchRegex = "(\\\"{1})([a-zA-Z0-9\\s]+)(\\\"{1})"; //e.g. "Form Name"
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+		if(matcher.find())
 		{
-			startIndex = line.indexOf('"') + 1; // open quote
-			endIndex = line.indexOf('"', startIndex+1); // close quote
-			fName = line.substring(startIndex, endIndex);
-			line = line.substring(endIndex + 2);
+//			startIndex = line.indexOf('"') + 1; // open quote
+//			endIndex = line.indexOf('"', startIndex+1); // close quote
+			fName = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$2");
+			line = line.substring(matcher.end());
 		}
 				
 		return fName;
@@ -174,15 +197,17 @@ public class PlayerItemObtainEvent extends Event {
 	private int parseCount()
 	{
 		int myCount = -1;
-		int startIndex, endIndex, searchIndex;
-		String searchTerm = "COUNT";
-		searchIndex = line.indexOf(searchTerm);
-		if(searchIndex >= 0)
+//		int startIndex, endIndex, searchIndex;
+		String searchRegex = "COUNT(\\s+)([0-9]+)";
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+//		searchIndex = line.indexOf(searchTerm);
+		if(matcher.find())
 		{
-			startIndex = line.indexOf(searchTerm) + searchTerm.length() + 1;
-			endIndex = line.indexOf(' ', startIndex);
-			myCount = Integer.parseInt(line.substring(startIndex, endIndex));
-			line = line.substring(endIndex + 1);
+//			startIndex = line.indexOf(searchTerm) + searchTerm.length() + 1;
+//			endIndex = line.indexOf(' ', startIndex);
+			myCount = Integer.parseInt(line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$2"));
+			line = line.substring(matcher.end());
 		}
 		
 		return myCount;
@@ -191,22 +216,40 @@ public class PlayerItemObtainEvent extends Event {
 	private String parsePrevContainer()
 	{
 		String pCont = "";
-		int startIndex, endIndex, searchIndex;
-		String searchTerm = "CONTAINER";
-		searchIndex = line.indexOf(searchTerm);
-		if(searchIndex >= 0)
-		{
-			startIndex = line.indexOf('[');
-			if(startIndex >= 0)
-			{
-				startIndex = line.indexOf('(', startIndex) + 1;
-				endIndex = line.indexOf(')', startIndex+1);
-				pCont = line.substring(startIndex, endIndex);
-//				line = line.substring(endIndex + 4); // ignore ")>]" string after prevContainer
-			}
-			else
-				pCont = "None";
-		}
+		String nullStr = "None";
+		String searchRegex = nullStr + "|(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [ObjectReference < (02039836)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+//		searchIndex = line.indexOf(searchRegex);
+//		if(line.substring(startIndex, endIndex).matches(searchRegex))
+	    if(matcher.find())
+	    {
+//		    if(matcher.start() == 0)
+//			{
+////				startIndex = line.indexOf('(') + 1;
+//				endIndex = line.indexOf(')', startIndex);
+
+    		/* check if matched string is length of nullStr */
+	    	if((matcher.end() - matcher.start()) == nullStr.length())
+	    	{
+	    		pCont = "None";
+	    		line = line.substring(pCont.length()); // start line at end of 'None'	
+	    	}
+	    	else 
+	    	{
+	    		pCont = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+				line = line.substring(matcher.end());	
+//				System.out.println("End index: " + endIndex);
+//				line = line.substring(endIndex + 4); // ignore ">] " string after objRef
+	    	}
+//			}
+	    }
+//		else // no object reference ("None")
+//		{
+//			pCont = line.split(" ")[0];
+//			line = line.substring(pCont.length() + 1);
+//		}
+//	}
 		
 		return pCont;
 	}
