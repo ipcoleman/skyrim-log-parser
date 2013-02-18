@@ -1,5 +1,8 @@
 package ths;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class PlayerTriggerEvent extends Event {
 
 	private PlayerTriggerType type;
@@ -39,50 +42,46 @@ public class PlayerTriggerEvent extends Event {
 	
 	@Override
 	protected void parse() {
-		// TODO Auto-generated method stub
 		super.parse();
 		try {
 			parseTrigger();
 		} catch (IncorrectTagException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	private void parseTrigger() throws IncorrectTagException
 	{
-		if(this.tag.contains("PLAYER_TRIGGER"))
-		{
-			// set trigger event type
-			if(this.tag.equals("PLAYER_TRIGGER_ENTER"))
-				setType(PlayerTriggerType.ENTER);
-			else if(this.tag.equals("PLAYER_TRIGGER_LEAVE"))
-				setType(PlayerTriggerType.LEAVE);
-			else
-				throw new IncorrectTagException();
-				
-			setTriggerID(parseTriggerID());
-		}
+		// set trigger event type
+		if(this.tag.equals("PLAYER_TRIGGER_ENTER") || this.tag.equals("PLAYER_ENTER_TRIGGER"))
+			setType(PlayerTriggerType.ENTER);
+		else if(this.tag.equals("PLAYER_TRIGGER_LEAVE"))
+			setType(PlayerTriggerType.LEAVE);
 		else
-		{
 			throw new IncorrectTagException();
-		}
+			
+		setTriggerID(parseTriggerID());
 	}
 	
 	private String parseTriggerID()
 	{
-		String trigID = "";
-		int startIndex, endIndex, searchIndex;
-		searchIndex = line.indexOf('[');
+		//[11/15/2012 - 10:17:16AM] PLAYER_TRIGGER_ENTER [ths1_TriggerEnterSCRIPT < (0208C7A1)>]
+		//[11/15/2012 - 10:21:43AM] PLAYER_ENTER_TRIGGER [ths1_CCQNearCatTriggerSCRIPT <alias NearCatTRIG on quest ths1_MissingDog (02009344)>]
+		//[11/15/2012 - 10:17:31AM] PLAYER_TRIGGER_LEAVE [ths1_TriggerEnterSCRIPT < (0208CD80)>]
 		
-		if(searchIndex >= 0)
+		String trigID = "";
+		String searchRegex = "(\\[{1})([_a-zA-Z]+)([_a-zA-Z0-9\\s]*)(\\<{1})([_a-zA-Z0-9\\s]*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [Form < (02050A4C)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+
+		if(matcher.find())
 		{
-			startIndex = line.indexOf('(') + 1;
-			endIndex = line.indexOf(')');
-			trigID = line.substring(startIndex, endIndex);
-//			line = line.substring(endIndex + 4);
+			trigID = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+			line = line.substring(matcher.end());
 		}
 		
+		if(this.tag.equals("PLAYER_ENTER_TRIGGER"))
+			System.out.println("");
 		return trigID;
 	}
 	
@@ -91,7 +90,7 @@ public class PlayerTriggerEvent extends Event {
 		String str = "";
 		str = str.concat(super.toString());
 		str = str.concat("Type: " + this.type.toString() + "\n");
-		str = str.concat("TriggerID " + this.triggerID + "\n");
+		str = str.concat("TriggerID: " + this.triggerID + "\n");
 		str = str.concat("------------------\n");
 		
 		return str;
