@@ -70,7 +70,7 @@ public class PlayerTriggerEvent extends Event {
 		//[11/15/2012 - 10:17:31AM] PLAYER_TRIGGER_LEAVE [ths1_TriggerEnterSCRIPT < (0208CD80)>]
 		
 		String trigID = "";
-		String searchRegex = "(\\[{1})([_a-zA-Z]+)([_a-zA-Z0-9\\s]*)(\\<{1})([_a-zA-Z0-9\\s]*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [Form < (02050A4C)>]
+		String searchRegex = "(\\[{1})([_a-zA-Z0-9\\s]+)(\\<{1})([_a-zA-Z0-9\\s]*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [Form < (02050A4C)>]
 		Pattern pattern = Pattern.compile(searchRegex);
 		Matcher matcher = pattern.matcher(line);
 
