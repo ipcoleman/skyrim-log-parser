@@ -1,0 +1,7 @@
+[11/15/2012 - 02:50:45PM] 0 log opened (PC)
+[11/15/2012 - 02:50:45PM] QUEST_STAGE_CHANGE [ths1_CCQScript <ths1_CapturedCatQUEST (0203B916)>] "Here, Kitty" 10
+[11/15/2012 - 02:50:47PM] QUEST_STAGE_CHANGE [ths1_CCQScript <ths1_CapturedCatQUEST (0203B916)>] "Here, Kitty" 20
+[11/15/2012 - 02:50:51PM] PLAYER_DIALOGUE [TIF__0104DEBE <topic info 0204DEBE on quest ths1_CapturedCatQUEST (0203B916)>] NPC_SPEAKER [Actor < (02039836)>]
+[11/15/2012 - 02:50:53PM] PLAYER_DIALOGUE [TIF__0105C556 <topic info 0205C556 on quest ths1_CapturedCatQUEST (0203B916)>] NPC_SPEAKER [Actor < (02039836)>]
+[11/15/2012 - 02:57:48PM] PLAYER_DOOR_ACTIVATE [ths1_COQRescueOrcScript <alias OrcCageDoor on quest ths1_CaptiveOrc (0201A9F8)>] "OrcCageDoor"
+[11/15/2012 - 03:02:39PM] Log closed

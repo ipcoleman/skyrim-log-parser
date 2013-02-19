@@ -1,0 +1,17 @@
+[11/15/2012 - 02:17:59PM] 0 log opened (PC)
+[11/15/2012 - 02:17:59PM] QUEST_INIT "Master Quest"
+[11/15/2012 - 02:17:59PM] QUEST_INIT [ths1_MDQScript <ths1_MissingDog (02009344)>] "Missing Dog"
+[11/15/2012 - 02:17:59PM] QUEST_INIT [ths1_CaptiveOrcQuestSCRIPT <ths1_CaptiveOrc (0201A9F8)>] "The Museum Attraction"
+[11/15/2012 - 02:17:59PM] QUEST_INIT [ths1_MDQScript <ths1_MissingDog (02009344)>] "Missing Dog"
+[11/15/2012 - 02:17:59PM] QUEST_INIT [ths1_CaptiveOrcQuestSCRIPT <ths1_CaptiveOrc (0201A9F8)>] "The Museum Attraction"
+[11/15/2012 - 02:17:59PM] PLAYER_ITEM_OBTAIN [MiscObject < (0000000F)>] None "gold" COUNT 1000 CONTAINER None
+[11/15/2012 - 02:17:59PM] QUEST_INIT "Master Quest"
+[11/15/2012 - 02:17:59PM] PLAYER_ITEM_OBTAIN [Form < (00012E49)>] None "Iron Armor" COUNT 1 CONTAINER None
+[11/15/2012 - 02:17:59PM] ACTOR_PACKAGE_START [ths1_MDQSeamusAliasSCRIPT <alias Seamus on quest ths1_MissingDog (02009344)>] "Seamus" : "[PF_ths1_SeamusReturnHomePack_0204FA01 < (0204FA01)>]"
+[11/15/2012 - 02:17:59PM] PLAYER_ITEM_OBTAIN [Form < (00012E4D)>] None "Iron Helmet" COUNT 1 CONTAINER None
+[11/15/2012 - 02:17:59PM] PLAYER_ITEM_OBTAIN [Form < (00012E4B)>] None "Iron Boots" COUNT 1 CONTAINER None
+[11/15/2012 - 02:17:59PM] PLAYER_ITEM_OBTAIN [MiscObject < (0000000F)>] None "gold" COUNT 1000 CONTAINER None
+[11/15/2012 - 02:17:59PM] PLAYER_ITEM_OBTAIN [Form < (00012E46)>] None "Iron Gauntlets" COUNT 1 CONTAINER None
+[11/15/2012 - 02:18:00PM] PLAYER_MOVE None
+[11/15/2012 - 02:36:38PM] PLAYER_DOOR_ACTIVATE [ths1_COQRescueOrcScript <alias OrcCageDoor on quest ths1_CaptiveOrc (0201A9F8)>] "OrcCageDoor"
+[11/15/2012 - 02:39:29PM] Log closed
