@@ -13,7 +13,6 @@ public class PlayerItemRemovedEvent extends Event {
 	
 	public PlayerItemRemovedEvent(String line) {
 		super(line);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public String getFormID() {
@@ -58,19 +57,20 @@ public class PlayerItemRemovedEvent extends Event {
 
 	@Override
 	protected void parse() {
-		// TODO Auto-generated method stub
 		super.parse();
 		try {
-			parsePlayerItemObtain();
+			parsePlayerItemRemoved();
 		} catch (IncorrectTagException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private void parsePlayerItemObtain() throws IncorrectTagException
+	private void parsePlayerItemRemoved() throws IncorrectTagException
 	{
-		if(this.tag.equals("PLAYER_ITEM_OBTAIN"))
+		// [11/08/2012 - 04:11:13PM] PLAYER_ITEM_OBTAIN [Form < (0004DA00)>] [ObjectReference < (02071201)>] "Fly Amanita" COUNT 1 CONTAINER None
+		// [11/08/2012 - 04:10:42PM] PLAYER_ITEM_REMOVED [Form < (00064B2F)>] [ObjectReference < (020711CC)>] "Green Apple" COUNT 1 CONTAINER None
+		
+		if(this.tag.equals("PLAYER_ITEM_REMOVED"))
 		{
 			setFormID(parseFormID());
 			System.out.println(formID);
@@ -89,22 +89,15 @@ public class PlayerItemRemovedEvent extends Event {
 	private String parseFormID()
 	{
 		String form = "";		
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
-		
-		if(startIndex >= 0)
+		String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [Form < (02050A4C)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+	    
+		if(matcher.find())
 		{
-			String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
-	//		searchIndex = line.indexOf(searchTerm);
-			if(line.substring(startIndex, endIndex).matches(searchRegex))
-			{
-				startIndex = line.indexOf('(') + 1;
-				endIndex = line.indexOf(')', startIndex);
-				form = line.substring(startIndex, endIndex);
-				// chop off formID from line
-				line = line.substring(endIndex + 4);
-			}
+			form = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+			// chop off formID from line
+			line = line.substring(matcher.end());	
 		}
 		
 		return form;
@@ -112,35 +105,26 @@ public class PlayerItemRemovedEvent extends Event {
 	
 	private String parseObjRef()
 	{
-		String ref = "";
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
-		
-		
-//		if(startIndex >= 0)
-//		{
-			String searchRegex = "^(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
-			Pattern pattern = Pattern.compile(searchRegex);
-		    Matcher matcher = pattern.matcher(line);
-	//		searchIndex = line.indexOf(searchRegex);
-//			if(line.substring(startIndex, endIndex).matches(searchRegex))
-		    if(matcher.find()){
-			    if(matcher.start() == 0)
-				{
-					startIndex = line.indexOf('(') + 1;
-					endIndex = line.indexOf(')', startIndex);
-					ref = line.substring(startIndex, endIndex);
-//					System.out.println("End index: " + endIndex);
-					line = line.substring(endIndex + 4); // ignore ">] " string after objRef
-				}
-		    }
-			else // no object reference ("None")
-			{
-				ref = line.split(" ")[0];
-				line = line.substring(ref.length() + 1);
-			}
-//		}
+		String ref = "";		
+		String nullStr = "None";
+		String searchRegex = nullStr + "|(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [ObjectReference < (02039836)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+
+	    if(matcher.find())
+	    {
+    		/* check if matched string is length of nullStr */
+	    	if((matcher.end() - matcher.start()) == nullStr.length())
+	    	{
+	    		ref = "None";
+	    		line = line.substring(ref.length()); // start line at end of 'None'	
+	    	}
+	    	else 
+	    	{
+	    		ref = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+				line = line.substring(matcher.end());	
+	    	}
+	    }
 		
 		return ref;
 	}
@@ -148,15 +132,13 @@ public class PlayerItemRemovedEvent extends Event {
 	private String parseFormName()
 	{
 		String fName = "";
-		int startIndex, endIndex, searchIndex;
-		String searchTerm = "\"";
-		searchIndex = line.indexOf(searchTerm);
-		if(searchIndex >= 0)
+		String searchRegex = "(\\\"{1})([a-zA-Z0-9\\s]+)(\\\"{1})"; //e.g. "Form Name"
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+		if(matcher.find())
 		{
-			startIndex = line.indexOf('"') + 1; // open quote
-			endIndex = line.indexOf('"', startIndex+1); // close quote
-			fName = line.substring(startIndex, endIndex);
-			line = line.substring(endIndex + 2);
+			fName = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$2");
+			line = line.substring(matcher.end());
 		}
 				
 		return fName;
@@ -165,15 +147,14 @@ public class PlayerItemRemovedEvent extends Event {
 	private int parseCount()
 	{
 		int myCount = -1;
-		int startIndex, endIndex, searchIndex;
-		String searchTerm = "COUNT";
-		searchIndex = line.indexOf(searchTerm);
-		if(searchIndex >= 0)
+		String searchRegex = "COUNT(\\s+)([0-9]+)";
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+
+		if(matcher.find())
 		{
-			startIndex = line.indexOf(searchTerm) + searchTerm.length() + 1;
-			endIndex = line.indexOf(' ', startIndex);
-			myCount = Integer.parseInt(line.substring(startIndex, endIndex));
-			line = line.substring(endIndex + 1);
+			myCount = Integer.parseInt(line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$2"));
+			line = line.substring(matcher.end());
 		}
 		
 		return myCount;
@@ -182,23 +163,26 @@ public class PlayerItemRemovedEvent extends Event {
 	private String parsePrevContainer()
 	{
 		String pCont = "";
-		int startIndex, endIndex, searchIndex;
-		String searchTerm = "CONTAINER";
-		searchIndex = line.indexOf(searchTerm);
-		if(searchIndex >= 0)
-		{
-			startIndex = line.indexOf('[');
-			if(startIndex >= 0)
-			{
-				startIndex = line.indexOf('(', startIndex) + 1;
-				endIndex = line.indexOf(')', startIndex+1);
-				pCont = line.substring(startIndex, endIndex);
-//				line = line.substring(endIndex + 4); // ignore ")>]" string after prevContainer
-			}
-			else
-				pCont = "None";
-		}
-		
+		String nullStr = "None";
+		String searchRegex = nullStr + "|(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [ObjectReference < (02039836)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+
+	    if(matcher.find())
+	    {
+    		/* check if matched string is length of nullStr */
+	    	if((matcher.end() - matcher.start()) == nullStr.length())
+	    	{
+	    		pCont = "None";
+	    		line = line.substring(pCont.length()); // start line at end of 'None'	
+	    	}
+	    	else 
+	    	{
+	    		pCont = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+				line = line.substring(matcher.end());	
+	    	}
+	    }
+	
 		return pCont;
 	}
 	
