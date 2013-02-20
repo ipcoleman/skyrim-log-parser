@@ -14,7 +14,6 @@ public class PlayerTriggerEvent extends Event {
 	}
 	
 	public PlayerTriggerEvent() {
-		// TODO Auto-generated constructor stub
 		super("");
 	}
 	
@@ -76,7 +75,7 @@ public class PlayerTriggerEvent extends Event {
 
 		if(matcher.find())
 		{
-			trigID = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+			trigID = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$6");
 			line = line.substring(matcher.end());
 		}
 		
