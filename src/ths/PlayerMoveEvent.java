@@ -1,4 +1,4 @@
-package ths;
+package src.ths;
 
 import org.joda.time.*;
 

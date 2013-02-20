@@ -1,4 +1,4 @@
-package ths;
+package src.ths;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package ths;
+package src.ths;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

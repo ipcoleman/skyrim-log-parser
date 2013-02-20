@@ -1,4 +1,4 @@
-package ths;
+package src.ths;
 
 public class PlayerFightEvent extends Event {
 

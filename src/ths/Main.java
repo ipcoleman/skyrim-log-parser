@@ -1,4 +1,4 @@
-package ths;
+package src.ths;
 
 import java.io.File;
 import java.util.Scanner;
@@ -19,16 +19,13 @@ public class Main {
 		Parser parser;
 		input = new Scanner(System.in);
 		
-		
-		
 		/* TESTING */
 //		String pattern = "(?i)(<title.*?>)(.+?)(</title>)";
 //		String example = "<title>you should get this</title>";
 //		String updated = example.replaceAll(pattern, "$2"); 
 //		System.out.print(updated);
-//		System.exit(0);	
-		
-		
+//		System.exit(0);				
+						
 		/* iterate over all log files */
 		for (File subjectDir : files) 
 		{

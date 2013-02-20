@@ -1,4 +1,4 @@
-package ths;
+package src.ths;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
