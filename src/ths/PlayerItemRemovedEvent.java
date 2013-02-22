@@ -13,6 +13,7 @@ public class PlayerItemRemovedEvent extends Event {
 	
 	public PlayerItemRemovedEvent(String line) {
 		super(line);
+		parse()
 	}
 	
 	public String getFormID() {
@@ -73,9 +74,7 @@ public class PlayerItemRemovedEvent extends Event {
 		if(this.tag.equals("PLAYER_ITEM_REMOVED"))
 		{
 			setFormID(parseFormID());
-			System.out.println(formID);
 			setObjRef(parseObjRef());
-			System.out.println(objRef);
 			setFormName(parseFormName());
 			setCount(parseCount());
 			setPrevContainer(parsePrevContainer());
