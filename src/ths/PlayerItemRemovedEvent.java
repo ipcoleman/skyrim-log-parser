@@ -13,7 +13,7 @@ public class PlayerItemRemovedEvent extends Event {
 	
 	public PlayerItemRemovedEvent(String line) {
 		super(line);
-		parse()
+		parse();
 	}
 	
 	public String getFormID() {
