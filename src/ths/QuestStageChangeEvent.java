@@ -1,14 +1,23 @@
 package src.ths;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class QuestStageChangeEvent extends Event {
 
 	private String questID;
 	private String questName;
 	private int questStage;
 	
+	
+	public QuestStageChangeEvent()
+	{
+		super("");
+	}
+	
 	public QuestStageChangeEvent(String line) {
 		super(line);
-		// TODO Auto-generated constructor stub
+		parse();
 	}
 	
 	public String getQuestID() {
@@ -63,91 +72,62 @@ public class QuestStageChangeEvent extends Event {
 	
 	private String parseQuestID()
 	{
-		String questID = "";		
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
-		
-//		System.out.println(this.line);
-		
-		if(startIndex >= 0)
+		String form = "";		
+		String searchRegex = "(\\[{1})([_a-zA-Z0-9]+)(\\s*)(\\<{1})([_a-zA-Z0-9\\s]+)(\\({1})([a-zA-Z0-9]+)(\\){1})(\\>{1})(\\]{1})"; // e.g. [ths1_CaptiveOrcQuestSCRIPT <ths1_CaptiveOrc (0201A9F8)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+	    
+		if(matcher.find())
 		{
-			String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
-	//		searchIndex = line.indexOf(searchTerm);
-			if(line.substring(startIndex, endIndex).matches(searchRegex))
-			{
-				startIndex = line.indexOf('<') + 1;
-				endIndex = line.indexOf('>', startIndex);
-				questID = line.substring(startIndex, endIndex);
-				// chop off questName/ID from line
-				line = line.substring(endIndex + 4);
-			}
+			form = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$5$6$7$8");
+			// chop off formID from line
+			line = line.substring(matcher.end());	
 		}
 		
-		return questID;
+		return form;
 	}
 	
 	private String parseQuestName()
 	{
-		String questName = "";		
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
-		
-//		System.out.println(this.line);
-		
-		if(startIndex >= 0)
+		String form = "";		
+		String searchRegex = "(\\\"{1})(['a-zA-Z0-9\\s]+)(\\\"{1})"; //e.g. "Form Name"
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+	    
+		if(matcher.find())
 		{
-			String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
-	//		searchIndex = line.indexOf(searchTerm);
-			if(line.substring(startIndex, endIndex).matches(searchRegex))
-			{
-				startIndex = line.indexOf('<') + 1;
-				endIndex = line.indexOf('>', startIndex);
-				questName = line.substring(startIndex, endIndex);
-				// chop off questName/ID from line
-				line = line.substring(endIndex + 4);
-			}
+			form = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$2");
+			// chop off formID from line
+			line = line.substring(matcher.end());	
 		}
 		
-		return questName;
+		return form;
 	}
 	
 	private int parseQuestStage()
 	{
-		int questStage = -1;	
-		String questStageStr = "";
-		int startIndex, endIndex;
-		startIndex = line.indexOf('[');
-		endIndex = line.indexOf(']') + 1;
-		
-//		System.out.println(this.line);
-		
-		if(startIndex >= 0)
+		int form = -1;		
+		String searchRegex = "([0-9]+)"; //e.g. 3, 10, etc
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+	    
+		if(matcher.find())
 		{
-			String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})";
-	//		searchIndex = line.indexOf(searchTerm);
-			if(line.substring(startIndex, endIndex).matches(searchRegex))
-			{
-				startIndex = line.indexOf('<') + 1;
-				endIndex = line.indexOf('>', startIndex);
-				questStageStr = line.substring(startIndex, endIndex);
-				questStage = Integer.parseInt(questStageStr);
-				// chop off questName/ID from line
-				line = line.substring(endIndex + 4);
-			}
+			form = Integer.parseInt(line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$1"));
+			// chop off formID from line
+			line = line.substring(matcher.end());	
 		}
 		
-		return questStage;
+		return form;
 	}
 	
 	@Override
 	public String toString() {
 		String str = "";
 		str = str.concat(super.toString());
-		str = str.concat("Quest ID: " + this.getQuestID() + "\n");
-		str = str.concat("Quest Name: " + this.getQuestName() + "\n");	
-		str = str.concat("Quest Stage: " + this.getQuestStage() + "\n");		
+		str = str.concat("QuestID: " + this.questID+ "\n");
+		str = str.concat("QuestName: " + this.questName + "\n");	
+		str = str.concat("QuestStage: " + this.questStage + "\n");		
 		str = str.concat("------------------\n");
 		
 		return str;
