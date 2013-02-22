@@ -12,8 +12,7 @@ public class PlayerItemObtainEvent extends Event {
 	private String formName;
 	private int count;
 	private String prevContainer;
-	
-	
+		
 	public PlayerItemObtainEvent() {
 		super("");
 	}
