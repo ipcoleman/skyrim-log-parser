@@ -1,13 +1,20 @@
 package src.ths;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class PlayerActorViewLossEvent extends Event {
 
 	private String actorID;
 	private String actorName;
 	
+	public PlayerActorViewLossEvent() {
+		super("");
+	}
+	
 	public PlayerActorViewLossEvent(String line) {
 		super(line);
-		// TODO Auto-generated constructor stub
+		parse();
 	}
 
 	public String getActorID() {
@@ -28,14 +35,68 @@ public class PlayerActorViewLossEvent extends Event {
 
 	@Override
 	protected void parse() {
-		// TODO Auto-generated method stub
 		super.parse();
+		try {
+			parsePlayerActorViewLoss();
+		} catch (IncorrectTagException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void parsePlayerActorViewLoss() throws IncorrectTagException
+	{
+		if(this.tag.equals("PLAYER_ACTOR_VIEW_LOSS"))
+		{
+			setActorID(parseActorID());
+			setActorName(parseActorName());
+		}
+		else
+		{
+			throw new IncorrectTagException();
+		}
+	}
+	
+	private String parseActorID()
+	{
+		String form = "";		
+		String searchRegex = "(\\[{1})([a-zA-Z]+)(\\s*)(\\<{1})(\\s*)(\\({1})([a-zA-Z0-9]+)(\\){1}\\>{1}\\]{1})"; // e.g. [ObjectReference < (02089359)>]
+		Pattern pattern = Pattern.compile(searchRegex);
+	    Matcher matcher = pattern.matcher(line);
+	    
+		if(matcher.find())
+		{
+			form = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$7");
+			// chop off formID from line
+			line = line.substring(matcher.end());	
+		}
+		
+		return form;
+	}
+	
+	private String parseActorName()
+	{
+		String fName = "";
+		String searchRegex = "(\\\"{1})(['a-zA-Z0-9\\s]+)(\\\"{1})"; //e.g. "Form Name"
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+		if(matcher.find())
+		{
+			fName = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$2");
+			line = line.substring(matcher.end());
+		}
+				
+		return fName;
 	}
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return "";
+		String str = "";
+		str = str.concat(super.toString());
+		str = str.concat("ActorID: " + this.actorID + "\n");
+		str = str.concat("ActorName: " + this.actorName + "\n");
+		str = str.concat("------------------\n");
+		
+		return str;
 	}
 
 }
