@@ -1,5 +1,8 @@
 package src.ths;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.joda.time.*;
 
 public class PlayerMoveEvent extends Event {
@@ -41,18 +44,16 @@ public class PlayerMoveEvent extends Event {
 	
 	private PlayerMoveType getMoveTypeFromString(String moveType)
 	{
-		return PlayerMoveType.valueOf(parseMoveType().toUpperCase());
+		return PlayerMoveType.valueOf(moveType.toUpperCase());
 //		return moveType;
 	}
 
 	@Override
 	protected void parse() {
-		// TODO Auto-generated method stub
 		try {
 			super.parse();
 			parsePlayerMove();
 		} catch (IncorrectTagException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -61,17 +62,9 @@ public class PlayerMoveEvent extends Event {
 	{
 		if(this.tag.equals("PLAYER_MOVE"))
 		{
-//			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy - hh:mm:ssaa");
-//			Date timestamp = parseDateTimeAsDate();
-			
-			/*if(prevMoveDate == null)
-				prevMoveDate = timestamp;*/
 			this.type =  getMoveTypeFromString(parseMoveType());
 			// TODO: get proper interval
 			this.interval = new Interval(timestamp.getTime(), timestamp.getTime());
-//			PlayerMoveEvent moveTypeObj = new PlayerMoveEvent(prevMoveDate.getTime(), timestamp.getTime(), typeStr);
-//			System.out.println(typeStr + " " + moveTypeObj.getInterval().toDuration().getStandardSeconds());
-//			prevMoveDate = timestamp;
 		}
 		else
 		{
@@ -81,7 +74,16 @@ public class PlayerMoveEvent extends Event {
 	
 	public String parseMoveType()
 	{		
-		String moveType = line.split(" ")[0];
+		String moveType = "";
+		String searchRegex = "([a-zA-Z]+)"; //e.g. None, Run, Sneak, Sprint
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+		if(matcher.find())
+		{
+			moveType = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$1");
+			line = line.substring(matcher.end());
+		}
+				
 		return moveType;
 	}
 	
