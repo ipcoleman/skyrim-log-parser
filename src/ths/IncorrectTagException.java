@@ -2,6 +2,11 @@ package src.ths;
 
 public class IncorrectTagException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7944529490572087154L; //?
+
 	public IncorrectTagException() {
 		// TODO Auto-generated constructor stub
 		super("INCORRECT TAG");
