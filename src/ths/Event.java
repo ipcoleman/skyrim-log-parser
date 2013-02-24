@@ -3,6 +3,8 @@ package src.ths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Event {
 	
@@ -64,10 +66,14 @@ public class Event {
 		}
 		else
 		{
-			myTag = line.split(" ")[0];
-			// remove tag from line
-			if(line.split(" ").length > 1) // only cut off tag from line if more data after tag
-				line = line.substring(line.indexOf(myTag) + myTag.length() + 1);
+			String searchRegex = "([_A-Z]+)"; //e.g. PLAYER_GRAB (allcaps w/ underscores)
+			Pattern pattern = Pattern.compile(searchRegex);
+			Matcher matcher = pattern.matcher(line);
+			if(matcher.find())
+			{
+				myTag = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$1");
+				line = line.substring(matcher.end());
+			}
 		}
 		
 		return myTag;
