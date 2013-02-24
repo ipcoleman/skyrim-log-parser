@@ -9,7 +9,7 @@ public class EventFactory {
 		PLAYER_WORLDSPACE_CHANGE, PLAYER_FIGHT, PLAYER_DIALOGUE, QUEST_STAGE_CHANGE, PLAYER_DISPLAY_CASE_OPEN,
 		PLAYER_ACTOR_VIEW_GAIN, PLAYER_ACTOR_VIEW_LOSS, PLAYER_DISTANCE_ACTOR, PLAYER_BOOK_READ, PLAYER_READ_BOOK, QUEST_COMPLETED,
 		LOG_CLOSE, QUEST_INIT, AI_PACKAGE_START, ACTOR_PACKAGE_START, ACTOR_MOVE_TO_PLAYER,
-		PLAYER_DOOR_OPEN, DOOR_OPEN, ACTOR_DOOR_OPEN
+		PLAYER_DOOR_OPEN, DOOR_OPEN, ACTOR_DOOR_OPEN, PLAYER_DOOR_ACTIVATE, PLAYER_GRAB
 	}
 	
 	public EventFactory() {
@@ -103,7 +103,13 @@ public class EventFactory {
 			case DOOR_OPEN:
 			case ACTOR_DOOR_OPEN:
 				e = new PlayerDoorOpenEvent(line);
-				break;				
+				break;		
+			case PLAYER_DOOR_ACTIVATE:
+				e = new PlayerDoorActivateEvent(line);
+				break;
+			case PLAYER_GRAB:
+				e = new PlayerGrabEvent(line);
+				break;
 			default:
 				e = null;
 				break;
