@@ -81,13 +81,15 @@ public class Event {
 	
 	protected String parseDateTimeAsString()
 	{
-		int beginIndex, endIndex;
 		String timestampStr = "";
-		beginIndex = line.indexOf('[') + 1;
-		endIndex = line.indexOf(']');
-		timestampStr = line.substring(beginIndex, endIndex);
-		// remove timestamp from line
-		line = line.substring(endIndex + 2); // account for end bracket+space
+		String searchRegex = "(\\[{1})([0-9]{2})/([0-9]{2})/([0-9]{4})(\\s*)-(\\s*)([0-9]{2}):([0-9]{2}):([0-9]{2})(AM|PM)"; //e.g. [11/15/2012 - 01:47:35PM]
+		Pattern pattern = Pattern.compile(searchRegex);
+		Matcher matcher = pattern.matcher(line);
+		if(matcher.find())
+		{
+			timestampStr = line.substring(matcher.start()+1, matcher.end()+1);//.replaceFirst(searchRegex, "$1");
+			line = line.substring(matcher.end());
+		}
 		return timestampStr;
 	}
 	
