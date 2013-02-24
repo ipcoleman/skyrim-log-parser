@@ -105,9 +105,8 @@ public class Event {
 	@Override
 	public String toString() {
 		String str = "";
-		str.concat("Tag: " + tag + "\n");
-		str.concat("Timestamp: " + timestamp + "\n");
-		str.concat("------------------");
+		str = str.concat("Tag: " + tag + "\n");
+		str = str.concat("Timestamp: " + timestamp + "\n");
 				
 		return str;
 	}
