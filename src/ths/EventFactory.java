@@ -92,9 +92,11 @@ public class EventFactory {
 			case PLAYER_READ_BOOK:
 				e = new PlayerBookReadEvent(line);
 				break;
-			case AI_PACKAGE_START:
-			case ACTOR_PACKAGE_START:
+			case AI_PACKAGE_START:			
 				e = new AIPackageStartEvent(line);
+				break;
+			case ACTOR_PACKAGE_START:
+				e = new ActorPackageStartEvent(line);
 				break;
 			case ACTOR_MOVE_TO_PLAYER:
 				e = new ActorMoveToPlayerEvent(line);
