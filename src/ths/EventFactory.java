@@ -102,6 +102,8 @@ public class EventFactory {
 				e = new ActorMoveToPlayerEvent(line);
 				break;
 			case PLAYER_DOOR_OPEN:
+				e = new PlayerDoorOpenEvent(line);
+				break;
 			case DOOR_OPEN:
 			case ACTOR_DOOR_OPEN:
 				e = new PlayerDoorOpenEvent(line);
@@ -113,6 +115,7 @@ public class EventFactory {
 				e = new PlayerGrabEvent(line);
 				break;
 			default:
+				System.out.println("******NO EVENT TYPE FOR TAG******");
 				e = null;
 				break;
 		}
