@@ -62,7 +62,7 @@ public class PlayerHitEvent extends Event {
 	{
 		String form = "";	
 		// e.g. [ths1_MDQDogAliasSCRIPT <alias CapturedDog on quest ths1_MissingDog (02009344)>]
-		String searchRegex = "(\\[{1})([_a-zA-Z0-9]+)(\\s*)(\\<{1})alias([a-zA-Z0-9]+)(\\s+)on quest(\\s+)([_a-zA-Z0-9\\s]+)(\\({1})([a-zA-Z0-9]+)(\\){1})(\\>{1})(\\]{1})"; 
+		String searchRegex = "(\\[{1})([_a-zA-Z0-9]+)(\\s*)(\\<{1})alias ([_a-zA-Z0-9]+) on quest ([_a-zA-Z0-9\\s]+)(\\({1})([a-zA-Z0-9]+)(\\){1})(\\>{1})(\\]{1})"; 
 		Pattern pattern = Pattern.compile(searchRegex);
 	    Matcher matcher = pattern.matcher(line);
 	    
@@ -70,7 +70,7 @@ public class PlayerHitEvent extends Event {
 		{
 			form = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$5");
 			// also set quest info while we're parsing this line
-			this.questID = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$8$9$10$11");
+			this.questID = line.substring(matcher.start(), matcher.end()).replaceFirst(searchRegex, "$6$7$8$9");
 			
 			// chop off formID from line
 			line = line.substring(matcher.end());	
