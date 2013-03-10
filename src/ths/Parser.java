@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ListIterator;
@@ -46,15 +48,26 @@ public class Parser {
 	{
 		String line;
 		Event e;
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new FileWriter("out.txt"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		while((line = nextLine()) != null)
 		{
 			System.out.println("Line " + currentLine + ": " + line + "\n");
 			e = factory.makeEvent(line);
 			System.out.println(e);
+			out.print(e.toString());
+			
 			events.add(e);
 			currentLine++;
 		}
+		
+		out.close();
 	}
 	
 	public String nextLine()

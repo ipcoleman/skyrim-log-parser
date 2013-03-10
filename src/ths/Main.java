@@ -44,7 +44,13 @@ public class Main {
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/self/" + roleFile.getName());
 								System.out.println("FILE NAME: " + roleFile.getPath());
-								parser.parse();	
+								try{
+									parser.parse();
+								} catch(Exception e)
+								{
+									e.printStackTrace();
+									System.exit(0);
+								}
 //								parser.printIntervalOfPlayerMoveEvents();
 								System.out.println("FINISHED FILE: " + roleFile.getPath());
 							}
@@ -58,7 +64,13 @@ public class Main {
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/role/" + roleFile.getName());
 								System.out.println("FILE NAME: " + roleFile.getPath());
-								parser.parse();	
+								try {
+									parser.parse();	
+								} catch(Exception e)
+								{
+									e.printStackTrace();
+									System.exit(0);
+								}
 //								parser.printIntervalOfPlayerMoveEvents();
 								System.out.println("FINISHED FILE: " + roleFile.getPath());
 							}
@@ -67,11 +79,11 @@ public class Main {
 						
 						
 						/* ask if we should continue */
-						System.out.print("Continue (y/n)? > ");
-						String choice = input.nextLine();
-						// exit program
-						if(choice.equals("n"))
-							System.exit(0);
+//						System.out.print("Continue (y/n)? > ");
+//						String choice = input.nextLine();
+//						// exit program
+//						if(choice.equals("n"))
+//							System.exit(0);
 					}
 				}
 					
