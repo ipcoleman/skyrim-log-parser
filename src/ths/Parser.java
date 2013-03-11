@@ -15,6 +15,7 @@ import org.joda.time.Interval;
 
 public class Parser {
 
+	private String				fileName;
 	private FileInputStream 	fInputStream;
 	private DataInputStream 	dInputStream;
 	private BufferedReader 		buffReader;
@@ -28,10 +29,11 @@ public class Parser {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Parser(String fileName)
+	public Parser(String file)
 	{
 		try {
-			fInputStream = new FileInputStream(fileName);
+			fileName = file;
+			fInputStream = new FileInputStream(file);
 			dInputStream = new DataInputStream(fInputStream);
 			buffReader = new BufferedReader(new InputStreamReader(dInputStream));
 			logTags = new String[100];
@@ -44,13 +46,21 @@ public class Parser {
 		}
 	}
 	
+	public String getFileName() {
+		return fileName;
+	}
+	
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	
 	public void parse()
 	{
 		String line;
 		Event e;
 		PrintWriter out = null;
 		try {
-			out = new PrintWriter(new FileWriter("out.txt"));
+			out = new PrintWriter(new FileWriter(this.fileName + ".txt"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

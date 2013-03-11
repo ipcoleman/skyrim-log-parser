@@ -43,6 +43,8 @@ public class Main {
 							for(File roleFile : playTypeDir.listFiles())
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/self/" + roleFile.getName());
+								/* set name of file for parser to output to file w/ same name */
+								parser.setFileName(roleFile.getName() + "_self");
 								System.out.println("FILE NAME: " + roleFile.getPath());
 								try{
 									parser.parse();
@@ -63,6 +65,8 @@ public class Main {
 							for(File roleFile : playTypeDir.listFiles())
 							{
 								parser = new Parser(logRoot + subjectDir.getName() + "/role/" + roleFile.getName());
+								/* set name of file for parser to output to file w/ same name */
+								parser.setFileName(roleFile.getName() + "_role");
 								System.out.println("FILE NAME: " + roleFile.getPath());
 								try {
 									parser.parse();	
