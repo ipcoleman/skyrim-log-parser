@@ -64,7 +64,7 @@ public class PlayerMoveEvent extends Event {
 		{
 			this.type =  getMoveTypeFromString(parseMoveType());
 			// TODO: get proper interval
-			this.interval = new Interval(timestamp.getTime(), timestamp.getTime());
+//			this.interval = new Interval(timestamp.getTime(), timestamp.getTime());
 		}
 		else
 		{
@@ -91,8 +91,8 @@ public class PlayerMoveEvent extends Event {
 	public String toString() {
 		String str = "";
 		str = str.concat(super.toString());
-		str = str.concat("Interval: " + this.interval.toString() + "\n");
 		str = str.concat("MoveType: " + this.type.toString() + "\n");
+		str = str.concat("Interval: " + this.interval.toString() + "\n");
 		str = str.concat("------------------\n");
 		
 		return str;
