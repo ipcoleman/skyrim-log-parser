@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.ListIterator;
 import org.joda.time.Interval;
 
@@ -25,25 +26,27 @@ public class Parser {
 	private EventFactory		factory;
 	private static int			currentLine;
 	
+	
 	public Parser() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public Parser(String file)
 	{
-		try {
-			fileName = file;
+		fileName = file;
+		try {			
 			fInputStream = new FileInputStream(file);
 			dInputStream = new DataInputStream(fInputStream);
 			buffReader = new BufferedReader(new InputStreamReader(dInputStream));
-			logTags = new String[100];
-			tagCount = 0;
-			events = new ArrayList<Event>();
-			factory = new EventFactory();
-			currentLine = 1;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		logTags = new String[100];
+		tagCount = 0;
+		events = new ArrayList<Event>();
+		factory = new EventFactory();
+		currentLine = 1;
 	}
 	
 	public String getFileName() {
