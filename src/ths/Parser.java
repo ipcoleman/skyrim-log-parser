@@ -60,7 +60,7 @@ public class Parser {
 		Event e;
 		PrintWriter out = null;
 		try {
-			out = new PrintWriter(new FileWriter(this.fileName + ".txt"));
+			out = new PrintWriter(new FileWriter("logs/output/" + this.fileName + ".txt"));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
