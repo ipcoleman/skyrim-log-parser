@@ -196,6 +196,7 @@ public class Parser {
 	public void printIntervalOfPlayerMoveEvents()
 	{
 		Event e;
+		Interval i;
 		
 		ListIterator<Event> li = events.listIterator();
 		while(li.hasNext())
@@ -203,8 +204,9 @@ public class Parser {
 			e = li.next();
 			if(e instanceof PlayerMoveEvent)
 			{
-				System.out.println("PlayerMoveEvent Interval: " + calcPlayerMoveInterval(e));
-				out.println("PlayerMoveEvent Interval: " + calcPlayerMoveInterval(e));
+				i = calcPlayerMoveInterval(e);
+				System.out.println("PlayerMoveEvent Interval: " + i);
+				out.println("PlayerMoveEvent Interval: " + i);
 			}
 		}
 	}
