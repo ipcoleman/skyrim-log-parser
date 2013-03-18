@@ -64,7 +64,7 @@ public class PlayerMoveEvent extends Event {
 		{
 			this.type =  getMoveTypeFromString(parseMoveType());
 			// TODO: get proper interval
-//			this.interval = new Interval(timestamp.getTime(), timestamp.getTime());
+			this.interval = new Interval(timestamp.getTime(), timestamp.getTime());
 		}
 		else
 		{

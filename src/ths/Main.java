@@ -52,9 +52,10 @@ public class Main {
 								{
 									e.printStackTrace();
 									System.exit(0);
-								}
-//								parser.printIntervalOfPlayerMoveEvents();
+								}								
 								System.out.println("FINISHED FILE: " + roleFile.getPath());
+								
+//								parser.printIntervalOfPlayerMoveEvents();
 							}
 						}
 												
@@ -77,6 +78,8 @@ public class Main {
 								}
 //								parser.printIntervalOfPlayerMoveEvents();
 								System.out.println("FINISHED FILE: " + roleFile.getPath());
+								
+//								parser.printIntervalOfPlayerMoveEvents();
 							}
 						}
 						

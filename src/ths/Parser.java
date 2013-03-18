@@ -25,6 +25,7 @@ public class Parser {
 	private ArrayList<Event>	events;
 	private EventFactory		factory;
 	private static int			currentLine;
+	private PrintWriter			out;
 	
 	
 	public Parser() {
@@ -61,7 +62,7 @@ public class Parser {
 	{
 		String line;
 		Event e;
-		PrintWriter out = null;
+//		PrintWriter out = null;
 		try {
 			out = new PrintWriter(new FileWriter("logs/output/" + this.fileName + ".txt"));
 		} catch (IOException e1) {
@@ -79,6 +80,8 @@ public class Parser {
 			events.add(e);
 			currentLine++;
 		}
+		
+		printIntervalOfPlayerMoveEvents();
 		
 		out.close();
 	}
@@ -173,11 +176,13 @@ public class Parser {
 		if(index >= 0) // object found
 		{
 			li = events.listIterator(index+1); // iterator over events after e
-			while((nextEvent = li.next()) != null)
+			while(li.hasNext())
 			{
+				nextEvent = li.next();
 				if(nextEvent instanceof PlayerMoveEvent)
 				{
 					nextTimestamp = nextEvent.getTimestamp();
+					break;
 				}
 			}
 			if(nextTimestamp != null)
@@ -193,11 +198,13 @@ public class Parser {
 		Event e;
 		
 		ListIterator<Event> li = events.listIterator();
-		while((e = li.next()) != null)
+		while(li.hasNext())
 		{
+			e = li.next();
 			if(e instanceof PlayerMoveEvent)
 			{
 				System.out.println("PlayerMoveEvent Interval: " + calcPlayerMoveInterval(e));
+				out.println("PlayerMoveEvent Interval: " + calcPlayerMoveInterval(e));
 			}
 		}
 	}
