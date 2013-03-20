@@ -30,7 +30,6 @@ public class Parser {
 	
 	
 	public Parser() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Parser(String file)
@@ -63,7 +62,7 @@ public class Parser {
 	{
 		String line;
 		Event e;
-//		PrintWriter out = null;
+
 		try {
 			out = new PrintWriter(new FileWriter("logs/output/" + this.fileName + ".txt"));
 		} catch (IOException e1) {
@@ -96,7 +95,6 @@ public class Parser {
 		try {
 			line = buffReader.readLine();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -114,7 +112,6 @@ public class Parser {
 				}
 			}
 		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -126,40 +123,12 @@ public class Parser {
 		try
 		{
 			logTags[tagCount++] = tag;
-//			System.out.println("Tag [" + tag + "] added");
 		}
 		catch(ArrayIndexOutOfBoundsException e)
 		{
 			e.printStackTrace();
 		}
 	}
-	
-	/*public String getDateTimeAsString(String line)
-	{
-		int beginIndex, endIndex;
-		
-		beginIndex = line.indexOf('[') + 1;
-		endIndex = line.indexOf(']');
-		return line.substring(beginIndex, endIndex);	
-	}
-	
-	public Date getDateTimeAsDate(String line)
-	{
-		return convertDateTime(getDateTimeAsString(line));	
-	}
-	
-	public Date convertDateTime(String dateString){
-	    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy - hh:mm:ssaa");
-	    Date convertedDate = new Date();
-	    try {
-	        convertedDate = dateFormat.parse(dateString);
-	    } catch (ParseException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    }
-	    return convertedDate;
-	}*/
-	
 	
 	
 	public boolean addEvent(Event e)
@@ -227,10 +196,6 @@ public class Parser {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-//		if(csvOut != null)
-//			csvOut.close();
-//		out.println(i.toDuration() + " ms");
 	}
 	
 }
