@@ -177,16 +177,29 @@ public class Parser {
 			if(e instanceof PlayerMoveEvent)
 			{
 				i = calcPlayerMoveInterval(e);
-				System.out.println("PlayerMoveEvent Interval: " + i);
-				out.println("PlayerMoveEvent Interval: " + i);
-				outputIntervalOfPlayerMoveEvent((PlayerMoveEvent)e, i);
+				if(i != null)
+				{
+					System.out.println("PlayerMoveEvent Interval: " + i);
+					out.println("PlayerMoveEvent Interval: " + i);
+					outputIntervalOfPlayerMoveEvent((PlayerMoveEvent)e, i);
+				}
 			}
 		}
 	}
 	
 	private void outputIntervalOfPlayerMoveEvent(PlayerMoveEvent e, Interval i)
 	{
-		System.out.println(e.getType() + "," + i.toDurationMillis()/1000);
+		try {
+//			if(e == null)
+//				System.out.print("Event null");
+//			if(i == null)
+//				System.out.print("Interval null");
+			System.out.println(e.getType() + "," + i.toDurationMillis()/1000);
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 		
 		/* print to file */
 		try {
