@@ -26,6 +26,7 @@ public class Parser {
 	private EventFactory		factory;
 	private static int			currentLine;
 	private PrintWriter			out;
+	private PrintWriter			csvOut;
 	
 	
 	public Parser() {
@@ -74,7 +75,7 @@ public class Parser {
 		{
 			System.out.println("Line " + currentLine + ": " + line + "\n");
 			e = factory.makeEvent(line);
-			System.out.println(e);
+//			System.out.println(e);
 			out.print(e.toString());
 			
 			events.add(e);
@@ -84,6 +85,8 @@ public class Parser {
 		printIntervalOfPlayerMoveEvents();
 		
 		out.close();
+		if(csvOut != null)
+			csvOut.close();
 	}
 	
 	public String nextLine()
@@ -207,8 +210,27 @@ public class Parser {
 				i = calcPlayerMoveInterval(e);
 				System.out.println("PlayerMoveEvent Interval: " + i);
 				out.println("PlayerMoveEvent Interval: " + i);
+				outputIntervalOfPlayerMoveEvent((PlayerMoveEvent)e, i);
 			}
 		}
+	}
+	
+	private void outputIntervalOfPlayerMoveEvent(PlayerMoveEvent e, Interval i)
+	{
+		System.out.println(e.getType() + "," + i.toDurationMillis()/1000);
+		
+		/* print to file */
+		try {
+			csvOut = new PrintWriter(new FileWriter("logs/output/" + this.fileName + ".csv"));
+			csvOut.println(e.getType() + "," + i.toDurationMillis()/1000);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+//		if(csvOut != null)
+//			csvOut.close();
+//		out.println(i.toDuration() + " ms");
 	}
 	
 }
