@@ -152,6 +152,17 @@ public class Parser {
 		Interval i;
 
 		ListIterator<Event> li = events.listIterator();
+		/* Set csv output file */
+		try {
+			csvOut = new PrintWriter(new FileWriter("logs/output/"
+					+ this.fileName + ".csv"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
+		
+		/* Cycle through events */
 		while (li.hasNext()) {
 			e = li.next();
 			if (e instanceof PlayerMoveEvent) {
@@ -159,7 +170,8 @@ public class Parser {
 				if (i != null) {
 					System.out.println("PlayerMoveEvent Interval: " + i);
 					out.println("PlayerMoveEvent Interval: " + i);
-					outputIntervalOfPlayerMoveEvent((PlayerMoveEvent) e, i);
+					
+					outputIntervalOfPlayerMoveEvent((PlayerMoveEvent) e, i);					
 				}
 			}
 		}
@@ -168,19 +180,9 @@ public class Parser {
 	private void outputIntervalOfPlayerMoveEvent(PlayerMoveEvent e, Interval i) {
 		try {
 			System.out.println(e.getType() + "," + i.toDurationMillis() / 1000);
+			csvOut.println(e.getType() + "," + i.toDurationMillis() / 1000);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
-		/* print to file */
-		try {
-			csvOut = new PrintWriter(new FileWriter("logs/output/"
-					+ this.fileName + ".csv"));
-			csvOut.println(e.getType() + "," + i.toDurationMillis() / 1000);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
-
 }
