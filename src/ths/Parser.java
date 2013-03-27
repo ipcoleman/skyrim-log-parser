@@ -84,7 +84,8 @@ public class Parser {
 
 		for(int i=0; i<moveTypeIntervals.length; i++)
 		{
-			System.out.println("MoveTypeInterval Totals: " + moveTypeIntervals[i]);
+			System.out.println(PlayerMoveType.values()[i].name() + " Totals: " + moveTypeIntervals[i]);
+			csvOut.println(PlayerMoveType.values()[i].name() + "," + moveTypeIntervals[i]);
 		}
 		
 		out.close();
@@ -189,7 +190,7 @@ public class Parser {
 	private void outputIntervalOfPlayerMoveEvent(PlayerMoveEvent e, Interval i) {
 		try {
 			System.out.println(e.getType() + "," + i.toDurationMillis() / 1000);
-			csvOut.println(e.getType() + "," + i.toDurationMillis() / 1000);
+//			csvOut.println(e.getType() + "," + i.toDurationMillis() / 1000);
 			moveTypeIntervals[(int)e.getType().ordinal()] += (i.toDurationMillis() / 1000); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
