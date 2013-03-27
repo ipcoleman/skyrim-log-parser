@@ -48,7 +48,7 @@ public class Parser {
 		events = new ArrayList<Event>();
 		factory = new EventFactory();
 		currentLine = 1;
-		moveTypeIntervals = new float[4];
+		moveTypeIntervals = new float[PlayerMoveType.values().length];
 	}
 
 	public String getFileName() {
