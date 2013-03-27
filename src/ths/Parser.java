@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.ListIterator;
 import org.joda.time.Interval;
 
+import src.ths.PlayerMoveEvent.PlayerMoveType;
+
 public class Parser {
 
 	private String fileName;
@@ -26,6 +28,7 @@ public class Parser {
 	private static int currentLine;
 	private PrintWriter out;
 	private PrintWriter csvOut;
+	private float[] moveTypeIntervals;
 
 	public Parser() {
 	}
@@ -45,6 +48,7 @@ public class Parser {
 		events = new ArrayList<Event>();
 		factory = new EventFactory();
 		currentLine = 1;
+		moveTypeIntervals = new float[4];
 	}
 
 	public String getFileName() {
@@ -78,6 +82,11 @@ public class Parser {
 
 		printIntervalOfPlayerMoveEvents();
 
+		for(int i=0; i<moveTypeIntervals.length; i++)
+		{
+			System.out.println("MoveTypeInterval Totals: " + moveTypeIntervals[i]);
+		}
+		
 		out.close();
 		if (csvOut != null)
 			csvOut.close();
@@ -181,6 +190,7 @@ public class Parser {
 		try {
 			System.out.println(e.getType() + "," + i.toDurationMillis() / 1000);
 			csvOut.println(e.getType() + "," + i.toDurationMillis() / 1000);
+			moveTypeIntervals[(int)e.getType().ordinal()] += (i.toDurationMillis() / 1000); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
