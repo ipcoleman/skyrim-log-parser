@@ -1,5 +1,7 @@
 package src.ths;
 
+import java.io.PrintWriter;
+
 public class PlayerPOVChangeEvent extends Event {
 
 	private String pov;
@@ -53,6 +55,12 @@ public class PlayerPOVChangeEvent extends Event {
 		newPov = line.split(" ")[0];
 		
 		return newPov;	
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println("POV," + this.pov);
 	}
 	
 	@Override
