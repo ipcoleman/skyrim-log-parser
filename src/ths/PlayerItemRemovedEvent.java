@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,6 +184,12 @@ public class PlayerItemRemovedEvent extends Event {
 	    }
 	
 		return pCont;
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println(this.formName + "," + this.count);
 	}
 	
 	@Override

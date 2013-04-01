@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -119,6 +120,12 @@ public class QuestStageChangeEvent extends Event {
 		}
 		
 		return form;
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println(this.questName + "," + this.questStage);
 	}
 	
 	@Override

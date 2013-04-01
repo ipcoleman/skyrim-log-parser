@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,6 +84,12 @@ public class QuestCompletedEvent extends Event {
 		}
 				
 		return fName;
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println(this.questName + ",COMPLETED");
 	}
 	
 	@Override

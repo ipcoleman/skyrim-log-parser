@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -108,6 +109,11 @@ public class Event {
 	        e.printStackTrace();
 	    }
 	    return convertedDate;
+	}
+	
+	public void outputToCSV(PrintWriter writer)
+	{
+		// nothing
 	}
 	
 	@Override

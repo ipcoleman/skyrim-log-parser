@@ -81,6 +81,7 @@ public class Parser {
 		}
 
 		printIntervalOfPlayerMoveEvents();
+		outputEventsToCSV();
 
 		for(int i=0; i<moveTypeIntervals.length; i++)
 		{
@@ -129,6 +130,17 @@ public class Parser {
 
 	public boolean addEvent(Event e) {
 		return this.events.add(e);
+	}
+	
+	private void outputEventsToCSV()
+	{
+		Event nextEvent;
+		ListIterator<Event> li = events.listIterator();
+		while(li.hasNext())
+		{
+			nextEvent = li.next();
+			nextEvent.outputToCSV(csvOut);
+		}
 	}
 
 	public Interval calcPlayerMoveInterval(Event e) {
@@ -196,4 +208,9 @@ public class Parser {
 			ex.printStackTrace();
 		}
 	}
+	
+//	private void outputQuestStart(QuestStageChangeEvent e)
+//	{
+//		csvOut.print(e.getQuestName() + "," + e.getTimestamp());
+//	}
 }
