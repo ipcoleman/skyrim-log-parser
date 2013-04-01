@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,6 +87,12 @@ public class PlayerActorViewLossEvent extends Event {
 		}
 				
 		return fName;
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println("VIEW_LOSS," + this.actorName);
 	}
 	
 	@Override
