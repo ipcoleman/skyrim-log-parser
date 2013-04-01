@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,6 +122,12 @@ public class PlayerDialogueEvent extends Event {
 		}
 		
 		return form;
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println("ACTOR_DIALOGUE_"+this.actorID + "," + "TOPIC_"+this.topicID);
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package src.ths;
 
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -107,6 +108,12 @@ public class ActorDeathEvent extends Event {
 		}
 		
 		return form;
+	}
+	
+	@Override
+	public void outputToCSV(PrintWriter writer) {
+		super.outputToCSV(writer);
+		writer.println("VICTIM_"+this.aliasName + "," + "KILLER_"+this.killerID);
 	}
 	
 	@Override
