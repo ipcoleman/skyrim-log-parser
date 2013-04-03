@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -212,6 +214,20 @@ public class Parser {
 			moveTypeIntervals[(int)e.getType().ordinal()] += (i.toDurationMillis() / 1000); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+	
+	public void connect()
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://ciigar.csc.ncsu.edu:3006/ipcolema_db", "ipcolema", "ipcolema");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
