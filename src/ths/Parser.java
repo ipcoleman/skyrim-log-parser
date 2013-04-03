@@ -8,6 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ListIterator;
@@ -29,6 +32,9 @@ public class Parser {
 	private PrintWriter out;
 	private PrintWriter csvOut;
 	private float[] moveTypeIntervals;
+	private Connection connection;
+	private Statement statement;
+	private ResultSet resultSet;
 
 	public Parser() {
 	}
