@@ -57,6 +57,9 @@ public class Parser {
 		factory = new EventFactory();
 		currentLine = 1;
 		moveTypeIntervals = new float[PlayerMoveType.values().length];
+		
+		/* database objects */
+		this.connection = null;
 	}
 
 	public String getFileName() {
@@ -100,6 +103,15 @@ public class Parser {
 		out.close();
 		if (csvOut != null)
 			csvOut.close();
+		
+		connect();
+		
+		/* close database connection */
+		try {
+			this.connection.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 	public String nextLine() {
@@ -221,14 +233,26 @@ public class Parser {
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://ciigar.csc.ncsu.edu:3006/ipcolema_db", "ipcolema", "ipcolema");
+			this.connection = DriverManager.getConnection("jdbc:mysql://ciigar.csc.ncsu.edu:3006/ipcolema_db", "ipcolema", "ipcolema");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			System.out.println("MySQL driver NOT registered");
 			e.printStackTrace();
+			return;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Connection failed");
 			e.printStackTrace();
+			return;
 		}
+	
+		if(this.connection != null)
+		{
+			System.out.println("Connection valid");
+		}
+		else
+		{
+			System.out.println("Connection null");
+		}
+		
 	}
 	
 //	private void outputQuestStart(QuestStageChangeEvent e)
