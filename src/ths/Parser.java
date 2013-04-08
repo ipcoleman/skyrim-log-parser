@@ -233,7 +233,8 @@ public class Parser {
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = DriverManager.getConnection("jdbc:mysql://ciigar.csc.ncsu.edu:3006/ipcolema_db", "ipcolema", "ipcolema");
+//			this.connection = DriverManager.getConnection("jdbc:mysql://ciigar.csc.ncsu.edu:3306/ipcolema_db", "ipcolema", "ipcolema");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/ipcolema_db", "ipcolema", "ipcolema");
 		} catch (ClassNotFoundException e) {
 			System.out.println("MySQL driver NOT registered");
 			e.printStackTrace();
