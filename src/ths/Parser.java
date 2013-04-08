@@ -104,7 +104,7 @@ public class Parser {
 		if (csvOut != null)
 			csvOut.close();
 		
-		connect();
+		connectToDatabase();
 		
 		/* close database connection */
 		try {
@@ -229,11 +229,10 @@ public class Parser {
 		}
 	}
 	
-	public void connect()
+	public void connectToDatabase()
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-//			this.connection = DriverManager.getConnection("jdbc:mysql://ciigar.csc.ncsu.edu:3306/ipcolema_db", "ipcolema", "ipcolema");
 			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/ipcolema_db", "ipcolema", "ipcolema");
 		} catch (ClassNotFoundException e) {
 			System.out.println("MySQL driver NOT registered");
@@ -244,16 +243,6 @@ public class Parser {
 			e.printStackTrace();
 			return;
 		}
-	
-		if(this.connection != null)
-		{
-			System.out.println("Connection valid");
-		}
-		else
-		{
-			System.out.println("Connection null");
-		}
-		
 	}
 	
 //	private void outputQuestStart(QuestStageChangeEvent e)
