@@ -15,7 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ListIterator;
+import java.util.Set;
+
 import org.joda.time.Interval;
 
 import src.ths.PlayerMoveEvent.PlayerMoveType;
@@ -34,9 +37,6 @@ public class Parser {
 	private PrintWriter out;
 	private PrintWriter csvOut;
 	private float[] moveTypeIntervals;
-	private Connection connection;
-	private Statement statement;
-	private ResultSet resultSet;
 
 	public Parser() {
 	}
@@ -57,9 +57,6 @@ public class Parser {
 		factory = new EventFactory();
 		currentLine = 1;
 		moveTypeIntervals = new float[PlayerMoveType.values().length];
-		
-		/* database objects */
-		this.connection = null;
 	}
 
 	public String getFileName() {
@@ -82,7 +79,7 @@ public class Parser {
 		}
 
 		while ((line = nextLine()) != null) {
-			System.out.println("Line " + currentLine + ": " + line + "\n");
+//			System.out.println("Line " + currentLine + ": " + line + "\n");
 			e = factory.makeEvent(line);
 			// System.out.println(e);
 			out.print(e.toString());
@@ -96,22 +93,13 @@ public class Parser {
 
 		for(int i=0; i<moveTypeIntervals.length; i++)
 		{
-			System.out.println(PlayerMoveType.values()[i].name() + " Totals: " + moveTypeIntervals[i]);
+//			System.out.println(PlayerMoveType.values()[i].name() + " Totals: " + moveTypeIntervals[i]);
 			csvOut.println(PlayerMoveType.values()[i].name() + "," + moveTypeIntervals[i]);
 		}
 		
 		out.close();
 		if (csvOut != null)
 			csvOut.close();
-		
-		connectToDatabase();
-		
-		/* close database connection */
-		try {
-			this.connection.close();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
 	}
 
 	public String nextLine() {
@@ -210,7 +198,7 @@ public class Parser {
 			if (e instanceof PlayerMoveEvent) {
 				i = calcPlayerMoveInterval(e);
 				if (i != null) {
-					System.out.println("PlayerMoveEvent Interval: " + i);
+//					System.out.println("PlayerMoveEvent Interval: " + i);
 					out.println("PlayerMoveEvent Interval: " + i);
 					
 					outputIntervalOfPlayerMoveEvent((PlayerMoveEvent) e, i);					
@@ -221,32 +209,11 @@ public class Parser {
 
 	private void outputIntervalOfPlayerMoveEvent(PlayerMoveEvent e, Interval i) {
 		try {
-			System.out.println(e.getType() + "," + i.toDurationMillis() / 1000);
+//			System.out.println(e.getType() + "," + i.toDurationMillis() / 1000);
 //			csvOut.println(e.getType() + "," + i.toDurationMillis() / 1000);
 			moveTypeIntervals[(int)e.getType().ordinal()] += (i.toDurationMillis() / 1000); 
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	public void connectToDatabase()
-	{
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/ipcolema_db", "ipcolema", "ipcolema");
-		} catch (ClassNotFoundException e) {
-			System.out.println("MySQL driver NOT registered");
-			e.printStackTrace();
-			return;
-		} catch (SQLException e) {
-			System.out.println("Connection failed");
-			e.printStackTrace();
-			return;
-		}
-	}
-	
-//	private void outputQuestStart(QuestStageChangeEvent e)
-//	{
-//		csvOut.print(e.getQuestName() + "," + e.getTimestamp());
-//	}
 }

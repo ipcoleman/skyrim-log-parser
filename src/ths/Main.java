@@ -1,6 +1,7 @@
 package src.ths;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -16,6 +17,11 @@ public class Main {
 		Parser parser;
 		input = new Scanner(System.in);
 
+		/* process bfi score */
+		BFIScorer bfi = new BFIScorer();
+		bfi.connectToDatabase();
+		bfi.getPersonalityIndexResults(2);
+				
 		/* iterate over all log files */
 		for (File subjectDir : files) {
 			if (subjectDir.isDirectory()) {
@@ -37,7 +43,7 @@ public class Main {
 								System.out.println("FILE NAME: "
 										+ roleFile.getPath());
 								try {
-									parser.parse();
+//									parser.parse();
 								} catch (Exception e) {
 									e.printStackTrace();
 									System.exit(0);
@@ -64,7 +70,7 @@ public class Main {
 								System.out.println("FILE NAME: "
 										+ roleFile.getPath());
 								try {
-									parser.parse();
+//									parser.parse();
 								} catch (Exception e) {
 									e.printStackTrace();
 									System.exit(0);
