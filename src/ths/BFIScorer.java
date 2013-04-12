@@ -103,6 +103,8 @@ public class BFIScorer {
 	public void getPersonalityIndexResults(int userID)
 	{
 		String query = "";
+		String trait = "";
+		int score = 0;
 		
 		try {
 			this.statement = this.connection.createStatement();
@@ -112,10 +114,23 @@ public class BFIScorer {
 			while(this.results.next())
 			{
 				System.out.println(this.results.getString(2) + ", " + this.results.getString(3) + ", " + this.results.getString(4));
-				BFIScorer bfi = new BFIScorer();
+				score = this.results.getInt(4);
+				trait = regularScoreItems.get(this.results.getInt(3));	
+								
+				if(trait.equals("extraversion")) eScore += score;
+				if(trait.equals("agreeableness")) aScore += score;
+				if(trait.equals("conscientiousness")) cScore += score;
+				if(trait.equals("neuroticism")) nScore += score;
+				if(trait.equals("openness")) oScore += score;
 			}
 			
 			this.connection.close();
+			
+			System.out.println("Extraversion for " + userID + ": " + eScore);
+			System.out.println("Agreeableness for " + userID + ": " + aScore);
+			System.out.println("Conscientiousness for " + userID + ": " + cScore);
+			System.out.println("Neuroticism for " + userID + ": " + nScore);
+			System.out.println("Openness for " + userID + ": " + oScore);			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
