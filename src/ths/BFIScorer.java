@@ -35,6 +35,11 @@ public class BFIScorer {
 	
 	public BFIScorer()
 	{
+		oScore = 0;
+		cScore = 0;
+		eScore = 0;
+		aScore = 0;
+		nScore = 0;
 		initScoreItems();
 		initReverseScoreItems();
 	}
@@ -47,6 +52,7 @@ public class BFIScorer {
 		this.neuroticismItems = new int[]{4, 14, 19, 29, 39};
 		this.opennessItems = new int[]{5, 10, 15, 20, 25, 30, 40, 44};
 		
+		regularScoreItems = new HashMap<Integer, String>();
 		for(int i=0; i<extraversionItems.length; i++)
 			regularScoreItems.put(extraversionItems[i], "extraversion");
 		for(int i=0; i<agreeablenessItems.length; i++)
@@ -67,6 +73,7 @@ public class BFIScorer {
 		this.neuroticismReverseItems = new int[]{9, 24, 34};
 		this.opennessReverseItems = new int[]{35, 41};
 		
+		reverseScoreItems = new HashMap<Integer, String>();
 		for(int i=0; i<extraversionReverseItems.length; i++)
 			reverseScoreItems.put(extraversionReverseItems[i], "extraversion");
 		for(int i=0; i<agreeablenessReverseItems.length; i++)
@@ -117,11 +124,14 @@ public class BFIScorer {
 				score = this.results.getInt(4);
 				trait = regularScoreItems.get(this.results.getInt(3));	
 								
-				if(trait.equals("extraversion")) eScore += score;
-				if(trait.equals("agreeableness")) aScore += score;
-				if(trait.equals("conscientiousness")) cScore += score;
-				if(trait.equals("neuroticism")) nScore += score;
-				if(trait.equals("openness")) oScore += score;
+				if(trait != null)
+				{
+					if(trait.equals("extraversion")) eScore += score;
+					if(trait.equals("agreeableness")) aScore += score;
+					if(trait.equals("conscientiousness")) cScore += score;
+					if(trait.equals("neuroticism")) nScore += score;
+					if(trait.equals("openness")) oScore += score;
+				}
 			}
 			
 			this.connection.close();
