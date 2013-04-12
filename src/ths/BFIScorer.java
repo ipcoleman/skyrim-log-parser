@@ -122,8 +122,15 @@ public class BFIScorer {
 			{
 				System.out.println(this.results.getString(2) + ", " + this.results.getString(3) + ", " + this.results.getString(4));
 				score = this.results.getInt(4);
-				trait = regularScoreItems.get(this.results.getInt(3));	
-								
+				/* Look in regular score list */
+				trait = regularScoreItems.get(this.results.getInt(3));
+				/* Look in reverse score list */
+				if(trait == null)
+				{
+					trait = reverseScoreItems.get(this.results.getInt(3));
+					score = (6 - score);
+				}
+				
 				if(trait != null)
 				{
 					if(trait.equals("extraversion")) eScore += score;
