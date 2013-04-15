@@ -37,6 +37,7 @@ public class Parser {
 	private PrintWriter out;
 	private PrintWriter csvOut;
 	private float[] moveTypeIntervals;
+	private BFIScorer bfi;
 
 	public Parser() {
 	}
@@ -57,6 +58,8 @@ public class Parser {
 		factory = new EventFactory();
 		currentLine = 1;
 		moveTypeIntervals = new float[PlayerMoveType.values().length];
+		
+		this.bfi = new BFIScorer();
 	}
 
 	public String getFileName() {
@@ -96,6 +99,10 @@ public class Parser {
 //			System.out.println(PlayerMoveType.values()[i].name() + " Totals: " + moveTypeIntervals[i]);
 			csvOut.println(PlayerMoveType.values()[i].name() + "," + moveTypeIntervals[i]);
 		}
+		
+		/* process BFI scores */
+//		this.bfi.connectToDatabase();
+//		this.bfi.getPersonalityIndexResults(2);
 		
 		out.close();
 		if (csvOut != null)

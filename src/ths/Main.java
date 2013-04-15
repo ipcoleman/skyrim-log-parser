@@ -16,12 +16,7 @@ public class Main {
 		File[] files = new File(logRoot).listFiles();
 		Parser parser;
 		input = new Scanner(System.in);
-
-		/* process bfi score */
-		BFIScorer bfi = new BFIScorer();
-		bfi.connectToDatabase();
-		bfi.getPersonalityIndexResults(2);
-				
+		
 		/* iterate over all log files */
 		for (File subjectDir : files) {
 			if (subjectDir.isDirectory()) {
@@ -93,6 +88,12 @@ public class Main {
 				}
 
 			}
+			
+			/* print BFI score */
+			BFIScorer bfi = new BFIScorer();
+			bfi.connectToDatabase();
+			int subjectID = Integer.parseInt(subjectDir.getName());
+			bfi.getPersonalityIndexResults(subjectID);	
 		}
 	}
 }

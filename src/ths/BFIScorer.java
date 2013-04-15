@@ -120,7 +120,7 @@ public class BFIScorer {
 			
 			while(this.results.next())
 			{
-				System.out.println(this.results.getString(2) + ", " + this.results.getString(3) + ", " + this.results.getString(4));
+//				System.out.println(this.results.getString(2) + ", " + this.results.getString(3) + ", " + this.results.getString(4));
 				score = this.results.getInt(4);
 				/* Look in regular score list */
 				trait = regularScoreItems.get(this.results.getInt(3));
