@@ -61,7 +61,7 @@ public class BFIScorer {
 		this.fileName = _fileName;
 		
 		try {
-			System.out.println("BFI FILENAME: " + this.fileName);
+//			System.out.println("BFI FILENAME: " + this.fileName);
 			this.setCsvOut(new PrintWriter(new FileWriter("logs/output/"
 					+ this.fileName + ".csv")));
 		} catch (IOException e1) {
@@ -72,8 +72,7 @@ public class BFIScorer {
 	
 	public void setFileName(String fName) throws IOException
 	{
-		this.fileName = fName;
-		
+		this.fileName = fName;		
 		this.setCsvOut(new PrintWriter(new FileWriter("logs/output/"
 				+ this.fileName + ".csv")));
 	}
@@ -194,15 +193,15 @@ public class BFIScorer {
 	
 	public void printBFIScoresToCsv(int userID)
 	{
-		System.out.println("Extraversion for " + userID + ": " + eScore);
+//		System.out.println("Extraversion for " + userID + ": " + eScore);
 		csvOut.println("extraversion," + eScore);
-		System.out.println("Agreeableness for " + userID + ": " + aScore);
+//		System.out.println("Agreeableness for " + userID + ": " + aScore);
 		csvOut.println("agreeableness," + aScore);
-		System.out.println("Conscientiousness for " + userID + ": " + cScore);
+//		System.out.println("Conscientiousness for " + userID + ": " + cScore);
 		csvOut.println("conscientiousness," + cScore);
-		System.out.println("Neuroticism for " + userID + ": " + nScore);
+//		System.out.println("Neuroticism for " + userID + ": " + nScore);
 		csvOut.println("neuroticism," + nScore);
-		System.out.println("Openness for " + userID + ": " + oScore);
+//		System.out.println("Openness for " + userID + ": " + oScore);
 		csvOut.println("openness," + oScore);
 	}
 	
