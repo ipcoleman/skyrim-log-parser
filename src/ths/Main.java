@@ -1,6 +1,7 @@
 package src.ths;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -16,6 +17,10 @@ public class Main {
 		File[] files = new File(logRoot).listFiles();
 		Parser parser;
 		input = new Scanner(System.in);
+		BFIScorer bfiRole = new BFIScorer();
+		bfiRole.connectToDatabase();
+		BFIScorer bfiSelf = new BFIScorer();
+		bfiSelf.connectToDatabase();
 		
 		/* iterate over all log files */
 		for (File subjectDir : files) {
@@ -43,10 +48,23 @@ public class Main {
 									e.printStackTrace();
 									System.exit(0);
 								}
+								
+								/* print BFI score */
+//								BFIScorer bfiRole = new BFIScorer(roleFile.getName() + "_role");
+								try {
+									bfiRole.setFileName(roleFile.getName() + "_role");
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								int subjectID = Integer.parseInt(subjectDir.getName());
+								bfiRole.getPersonalityIndexResults(subjectID);
+								bfiRole.printBFIScoresToCsv(subjectID);
+								
 								System.out.println("FINISHED FILE: "
 										+ roleFile.getPath());
 
-								// parser.printIntervalOfPlayerMoveEvents();
+								 parser.printIntervalOfPlayerMoveEvents();
 							}
 						}
 
@@ -70,6 +88,18 @@ public class Main {
 									e.printStackTrace();
 									System.exit(0);
 								}
+								
+								/* print BFI score */
+//								BFIScorer bfiSelf = new BFIScorer(roleFile.getName() + "_self");
+								try {
+									bfiSelf.setFileName(roleFile.getName() + "_self");
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								int subjectID = Integer.parseInt(subjectDir.getName());
+								bfiSelf.getPersonalityIndexResults(subjectID);
+								bfiSelf.printBFIScoresToCsv(subjectID);
+								
 								// parser.printIntervalOfPlayerMoveEvents();
 								System.out.println("FINISHED FILE: "
 										+ roleFile.getPath());
@@ -77,23 +107,9 @@ public class Main {
 								// parser.printIntervalOfPlayerMoveEvents();
 							}
 						}
-
-						/* ask if we should continue */
-						// System.out.print("Continue (y/n)? > ");
-						// String choice = input.nextLine();
-						// // exit program
-						// if(choice.equals("n"))
-						// System.exit(0);
 					}
 				}
-
-			}
-			
-			/* print BFI score */
-			BFIScorer bfi = new BFIScorer();
-			bfi.connectToDatabase();
-			int subjectID = Integer.parseInt(subjectDir.getName());
-			bfi.getPersonalityIndexResults(subjectID);	
+			}							
 		}
 	}
 }

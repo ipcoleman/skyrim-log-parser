@@ -1,5 +1,8 @@
 package src.ths;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,6 +22,8 @@ public class BFIScorer {
 	/* Hash Maps */
 	private HashMap<Integer, String> regularScoreItems;
 	private HashMap<Integer, String> reverseScoreItems;
+	private String fileName;
+	private PrintWriter csvOut;
 	/* Arrays */
 	int extraversionItems[];
 	int extraversionReverseItems[];
@@ -44,6 +49,43 @@ public class BFIScorer {
 		initReverseScoreItems();
 	}
 	
+	public BFIScorer(String _fileName)
+	{
+		oScore = 0;
+		cScore = 0;
+		eScore = 0;
+		aScore = 0;
+		nScore = 0;
+		initScoreItems();
+		initReverseScoreItems();
+		this.fileName = _fileName;
+		
+		try {
+			System.out.println("BFI FILENAME: " + this.fileName);
+			this.setCsvOut(new PrintWriter(new FileWriter("logs/output/"
+					+ this.fileName + ".csv")));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return;
+		}
+	}
+	
+	public void setFileName(String fName) throws IOException
+	{
+		this.fileName = fName;
+		
+		this.setCsvOut(new PrintWriter(new FileWriter("logs/output/"
+				+ this.fileName + ".csv")));
+	}
+	
+	public PrintWriter getCsvOut() {
+		return csvOut;
+	}
+
+	public void setCsvOut(PrintWriter csvOut) {
+		this.csvOut = csvOut;
+	}
+
 	private void initScoreItems()
 	{
 		this.extraversionItems = new int[]{1, 11, 16, 26, 36};
@@ -120,7 +162,6 @@ public class BFIScorer {
 			
 			while(this.results.next())
 			{
-//				System.out.println(this.results.getString(2) + ", " + this.results.getString(3) + ", " + this.results.getString(4));
 				score = this.results.getInt(4);
 				/* Look in regular score list */
 				trait = regularScoreItems.get(this.results.getInt(3));
@@ -141,18 +182,28 @@ public class BFIScorer {
 				}
 			}
 			
-			this.connection.close();
+//			this.connection.close();
 			
-			System.out.println("Extraversion for " + userID + ": " + eScore);
-			System.out.println("Agreeableness for " + userID + ": " + aScore);
-			System.out.println("Conscientiousness for " + userID + ": " + cScore);
-			System.out.println("Neuroticism for " + userID + ": " + nScore);
-			System.out.println("Openness for " + userID + ": " + oScore);			
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void printBFIScoresToCsv(int userID)
+	{
+		System.out.println("Extraversion for " + userID + ": " + eScore);
+		csvOut.println("extraversion," + eScore);
+		System.out.println("Agreeableness for " + userID + ": " + aScore);
+		csvOut.println("agreeableness," + aScore);
+		System.out.println("Conscientiousness for " + userID + ": " + cScore);
+		csvOut.println("conscientiousness," + cScore);
+		System.out.println("Neuroticism for " + userID + ": " + nScore);
+		csvOut.println("neuroticism," + nScore);
+		System.out.println("Openness for " + userID + ": " + oScore);
+		csvOut.println("openness," + oScore);
 	}
 	
 }
