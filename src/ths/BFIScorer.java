@@ -194,15 +194,17 @@ public class BFIScorer {
 	public void printBFIScoresToCsv(int userID)
 	{
 //		System.out.println("Extraversion for " + userID + ": " + eScore);
-		csvOut.println("extraversion," + eScore);
+		csvOut.append("extraversion," + eScore);
 //		System.out.println("Agreeableness for " + userID + ": " + aScore);
-		csvOut.println("agreeableness," + aScore);
+		csvOut.append("agreeableness," + aScore);
 //		System.out.println("Conscientiousness for " + userID + ": " + cScore);
-		csvOut.println("conscientiousness," + cScore);
+		csvOut.append("conscientiousness," + cScore);
 //		System.out.println("Neuroticism for " + userID + ": " + nScore);
-		csvOut.println("neuroticism," + nScore);
+		csvOut.append("neuroticism," + nScore);
 //		System.out.println("Openness for " + userID + ": " + oScore);
-		csvOut.println("openness," + oScore);
+		csvOut.append("openness," + oScore);
+		
+		this.csvOut.close();
 	}
 	
 }

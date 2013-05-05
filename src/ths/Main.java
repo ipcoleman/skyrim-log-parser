@@ -40,6 +40,8 @@ public class Main {
 							parser.setFileName(logFile.getName() + "_" + playType);
 							System.out.println("FILE NAME: "
 									+ logFile.getPath());
+							
+							/* PARSER */
 							try {
 								// parser.parse();
 							} catch (Exception e) {
@@ -47,11 +49,13 @@ public class Main {
 								System.exit(0);
 							}
 
+							/* BFI SCORER */
 							try {
 								bfi.setFileName(logFile.getName() + "_" + playType);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
+							
 							int subjectID = Integer.parseInt(subjectDir
 									.getName());
 							bfi.getPersonalityIndexResults(subjectID);

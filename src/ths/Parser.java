@@ -98,9 +98,9 @@ public class Parser {
 			csvOut.println(PlayerMoveType.values()[i].name() + "," + moveTypeIntervals[i]);
 		}
 				
-		out.close();
-		if (csvOut != null)
-			csvOut.close();
+//		out.close();
+//		if (csvOut != null)
+//			csvOut.close();
 	}
 
 	public String nextLine() {
