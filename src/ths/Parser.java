@@ -34,10 +34,10 @@ public class Parser {
 	private ArrayList<Event> events;
 	private EventFactory 	factory;
 	private static int 		currentLine;
-	private PrintWriter 	out;
+//	private PrintWriter 	out;
 	private PrintWriter 	csvOut;
 	private float[] 		moveTypeIntervals;
-	private BFIScorer 		bfi;
+//	private BFIScorer 		bfi;
 
 	public Parser() {
 	}
@@ -69,22 +69,30 @@ public class Parser {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	
+	public PrintWriter getCsvOut() {
+		return csvOut;
+	}
+
+	public void setCsvOut(PrintWriter csvOut) {
+		this.csvOut = csvOut;
+	}
 
 	public void parse() {
 		String line;
 		Event e;
 
-		try {
-			out = new PrintWriter(new FileWriter("logs/output/" + this.fileName
-					+ ".txt"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			out = new PrintWriter(new FileWriter("logs/output/" + this.fileName
+//					+ ".txt"));
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
 
 		while ((line = nextLine()) != null) {
 			e = factory.makeEvent(line);
 			// System.out.println(e);
-			out.print(e.toString());
+//			out.print(e.toString());
 
 			events.add(e);
 			currentLine++;
@@ -148,7 +156,7 @@ public class Parser {
 		while(li.hasNext())
 		{
 			nextEvent = li.next();
-			nextEvent.outputToCSV(csvOut);
+			nextEvent.outputToCSV(this.csvOut);
 		}
 	}
 
@@ -190,7 +198,7 @@ public class Parser {
 			if (e instanceof PlayerMoveEvent) {
 				i = calcPlayerMoveInterval(e);
 				if (i != null) {
-					out.println("PlayerMoveEvent Interval: " + i);					
+//					out.println("PlayerMoveEvent Interval: " + i);					
 					outputIntervalOfPlayerMoveEvent((PlayerMoveEvent) e, i);					
 				}
 			}

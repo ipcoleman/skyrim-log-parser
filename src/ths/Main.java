@@ -1,7 +1,10 @@
 package src.ths;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -12,9 +15,12 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		String logRoot = "logs/phase2/";
+		String outputRoot = "logs/output/";
 		String logPath = "";
+		String outputPath = "";
 		String playType = "";
 		File[] files = new File(logRoot).listFiles();
+		PrintWriter csvOut = null;
 		Parser parser;
 		BFIScorer bfi = new BFIScorer();
 		bfi.connectToDatabase();
@@ -33,29 +39,43 @@ public class Main {
 							logPath = logRoot + subjectDir.getName() + "/"
 									+ playType + "/" + logFile.getName();
 							parser = new Parser(logPath);
+							outputPath = outputRoot + "/" + logFile.getName()
+									+ ".csv";
 							/*
 							 * set name of file for parser to output to file w/
 							 * same name
 							 */
-							parser.setFileName(logFile.getName() + "_" + playType);
+							// parser.setFileName(logFile.getName() + "_"
+							// + playType);
 							System.out.println("FILE NAME: "
 									+ logFile.getPath());
-							
+
+							/* create file writer */
+							try {
+								csvOut = new PrintWriter(new FileWriter(
+										outputPath));
+								bfi.setCsvOut(csvOut);
+								parser.setCsvOut(csvOut);
+							} catch (IOException e1) {
+								e1.printStackTrace();
+							}
+
 							/* PARSER */
 							try {
-								// parser.parse();
+								parser.parse();
 							} catch (Exception e) {
 								e.printStackTrace();
 								System.exit(0);
 							}
 
 							/* BFI SCORER */
-							try {
-								bfi.setFileName(logFile.getName() + "_" + playType);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-							
+							// try {
+							// bfi.setFileName(logFile.getName() + "_" +
+							// playType);
+							// } catch (IOException e) {
+							// e.printStackTrace();
+							// }
+
 							int subjectID = Integer.parseInt(subjectDir
 									.getName());
 							bfi.getPersonalityIndexResults(subjectID);
@@ -65,6 +85,8 @@ public class Main {
 									+ logFile.getPath());
 
 							parser.printIntervalOfPlayerMoveEvents();
+
+							csvOut.close();
 						}
 					}
 				}
