@@ -156,7 +156,8 @@ public class Parser {
 		while(li.hasNext())
 		{
 			nextEvent = li.next();
-			nextEvent.outputToCSV(this.csvOut);
+			if(nextEvent != null)
+				nextEvent.outputToCSV(this.csvOut);
 		}
 	}
 

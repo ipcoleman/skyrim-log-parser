@@ -40,7 +40,7 @@ public class Main {
 									+ playType + "/" + logFile.getName();
 							parser = new Parser(logPath);
 							outputPath = outputRoot + "/" + logFile.getName()
-									+ ".csv";
+									+ "_" + playType + ".csv";
 							/*
 							 * set name of file for parser to output to file w/
 							 * same name

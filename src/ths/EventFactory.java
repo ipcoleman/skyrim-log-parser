@@ -105,10 +105,11 @@ public class EventFactory {
 			case PLAYER_DOOR_OPEN:
 				e = new PlayerDoorOpenEvent(line);
 				break;
-			case DOOR_OPEN:
-			case ACTOR_DOOR_OPEN:
-				e = new PlayerDoorOpenEvent(line);
-				break;		
+//			case DOOR_OPEN:
+//			case ACTOR_DOOR_OPEN:
+//				System.out.println(line);
+//				e = new PlayerDoorOpenEvent(line);
+//				break;		
 			case PLAYER_DOOR_ACTIVATE:
 				e = new PlayerDoorActivateEvent(line);
 				break;
