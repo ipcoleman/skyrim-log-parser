@@ -125,7 +125,7 @@ public class QuestStageChangeEvent extends Event {
 	@Override
 	public void outputToCSV(PrintWriter writer) {
 		super.outputToCSV(writer);
-		writer.println(this.questName + "," + this.questStage);
+		writer.println(this.questName.replace(",", "") + "," + this.questStage);
 	}
 	
 	@Override
