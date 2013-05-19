@@ -105,11 +105,12 @@ public class Parser {
 		if(PRINT_EVENTS)
 			outputEventsToCSV();
 
-		csvOut.print("userid,");
+//		csvOut.print("userid,");
 		for(int i=0; i<moveTypeIntervals.length; i++)
 		{
 			csvOut.print(moveTypeIntervals[i] + ",");
 		}
+		csvOut.print("\n");
 				
 //		out.close();
 //		if (csvOut != null)

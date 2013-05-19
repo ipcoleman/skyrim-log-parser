@@ -29,7 +29,7 @@ public class Main {
 			outputPath = outputRoot + "all.csv";
 			csvOut = new PrintWriter(new FileWriter(
 					outputPath));
-			csvOut.println("PRTCPNT,NONE,RUN,SPRINT,SNEAK,EXTRAV,AGREE,CONSC,NEUROT,OPEN");
+			csvOut.println("PRTCPNT,EXTRAV,AGREE,CONSC,NEUROT,OPEN,NONE,RUN,SPRINT,SNEAK");
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -63,6 +63,11 @@ public class Main {
 							bfi.setCsvOut(csvOut);
 							parser.setCsvOut(csvOut);
 
+							int subjectID = Integer.parseInt(subjectDir
+									.getName());
+							bfi.getPersonalityIndexResults(subjectID);
+							bfi.printBFIScoresToCsv(subjectID);
+							
 							/* PARSER */
 							try {
 								parser.parse();
@@ -79,15 +84,12 @@ public class Main {
 							// e.printStackTrace();
 							// }
 
-							int subjectID = Integer.parseInt(subjectDir
-									.getName());
-							bfi.getPersonalityIndexResults(subjectID);
-							bfi.printBFIScoresToCsv(subjectID);
+							
 
 							System.out.println("FINISHED FILE: "
 									+ logFile.getPath());
 
-							parser.printIntervalOfPlayerMoveEvents();
+//							parser.printIntervalOfPlayerMoveEvents();
 
 							
 						}

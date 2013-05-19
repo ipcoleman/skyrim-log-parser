@@ -136,7 +136,7 @@ public class BFIScorer {
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3307/ipcolema_db", "ipcolema", "ipcolema");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ipcolema_db", "ipcolema", "ipcolema");
 		} catch (ClassNotFoundException e) {
 			System.out.println("MySQL driver NOT registered");
 			e.printStackTrace();
@@ -195,6 +195,7 @@ public class BFIScorer {
 	
 	public void printBFIScoresToCsv(int userID)
 	{
+		csvOut.print(userID + ",");
 //		System.out.println("Extraversion for " + userID + ": " + eScore);
 		csvOut.print(eScore + ",");
 //		System.out.println("Agreeableness for " + userID + ": " + aScore);
@@ -204,8 +205,7 @@ public class BFIScorer {
 //		System.out.println("Neuroticism for " + userID + ": " + nScore);
 		csvOut.print(nScore + ",");
 //		System.out.println("Openness for " + userID + ": " + oScore);
-		csvOut.print(oScore + ",");
-		csvOut.print("\n");
+		csvOut.print(oScore + ",");		
 //		this.csvOut.close();
 	}
 	
