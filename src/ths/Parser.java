@@ -38,6 +38,8 @@ public class Parser {
 	private PrintWriter 	csvOut;
 	private float[] 		moveTypeIntervals;
 //	private BFIScorer 		bfi;
+	
+	private static boolean PRINT_EVENTS = false; 
 
 	public Parser() {
 	}
@@ -99,7 +101,9 @@ public class Parser {
 		}
 
 		printIntervalOfPlayerMoveEvents();
-		outputEventsToCSV();
+		
+		if(PRINT_EVENTS)
+			outputEventsToCSV();
 
 		for(int i=0; i<moveTypeIntervals.length; i++)
 		{

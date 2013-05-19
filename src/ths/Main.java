@@ -24,6 +24,16 @@ public class Main {
 		Parser parser;
 		BFIScorer bfi = new BFIScorer();
 		bfi.connectToDatabase();
+		
+		try {
+			outputPath = outputRoot + "all.csv";
+			csvOut = new PrintWriter(new FileWriter(
+					outputPath));
+			csvOut.println("PRTCPNT,EXTRAV,AGREE,CONSC,NEUROT,OPEN,NONE,RUN,SPRINT,SNEAK");
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		/* iterate over all log files */
 		for (File subjectDir : files) {
@@ -39,8 +49,8 @@ public class Main {
 							logPath = logRoot + subjectDir.getName() + "/"
 									+ playType + "/" + logFile.getName();
 							parser = new Parser(logPath);
-							outputPath = outputRoot + "/" + logFile.getName()
-									+ "_" + playType + ".csv";
+//							outputPath = outputRoot + "/" + logFile.getName()
+//									+ "_" + playType + ".csv";
 							/*
 							 * set name of file for parser to output to file w/
 							 * same name
@@ -50,15 +60,8 @@ public class Main {
 							System.out.println("FILE NAME: "
 									+ logFile.getPath());
 
-							/* create file writer */
-							try {
-								csvOut = new PrintWriter(new FileWriter(
-										outputPath));
-								bfi.setCsvOut(csvOut);
-								parser.setCsvOut(csvOut);
-							} catch (IOException e1) {
-								e1.printStackTrace();
-							}
+							bfi.setCsvOut(csvOut);
+							parser.setCsvOut(csvOut);
 
 							/* PARSER */
 							try {
@@ -86,11 +89,12 @@ public class Main {
 
 							parser.printIntervalOfPlayerMoveEvents();
 
-							csvOut.close();
+							
 						}
 					}
 				}
 			}
 		}
+		csvOut.close();
 	}
 }

@@ -206,7 +206,7 @@ public class BFIScorer {
 //		System.out.println("Openness for " + userID + ": " + oScore);
 		csvOut.println("openness," + oScore);
 		
-		this.csvOut.close();
+//		this.csvOut.close();
 	}
 	
 }
