@@ -154,6 +154,8 @@ public class BFIScorer {
 		String trait = "";
 		int score = 0;
 		
+		eScore = aScore = cScore = nScore = oScore = 0;
+		
 		try {
 			this.statement = this.connection.createStatement();
 			query = "SELECT * FROM pi_responses WHERE subject_id = " + userID;
