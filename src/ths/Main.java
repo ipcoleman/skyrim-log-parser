@@ -29,7 +29,7 @@ public class Main {
 			outputPath = outputRoot + "all.csv";
 			csvOut = new PrintWriter(new FileWriter(
 					outputPath));
-			csvOut.println("PRTCPNT,EXTRAV,AGREE,CONSC,NEUROT,OPEN,NONE,RUN,SPRINT,SNEAK");
+			csvOut.println("PRTCPNT,NONE,RUN,SPRINT,SNEAK,EXTRAV,AGREE,CONSC,NEUROT,OPEN");
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();

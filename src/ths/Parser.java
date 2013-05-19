@@ -105,9 +105,10 @@ public class Parser {
 		if(PRINT_EVENTS)
 			outputEventsToCSV();
 
+		csvOut.print("userid,");
 		for(int i=0; i<moveTypeIntervals.length; i++)
 		{
-			csvOut.println(PlayerMoveType.values()[i].name() + "," + moveTypeIntervals[i]);
+			csvOut.print(moveTypeIntervals[i] + ",");
 		}
 				
 //		out.close();
